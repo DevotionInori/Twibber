@@ -25,22 +25,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btHome = findViewById(R.id.btMain);
-        btMessage = findViewById(R.id.btMessage);
-        btMe = findViewById(R.id.btMe);
-
-        icHome_select = getResources().getDrawable(R.drawable.ic_home);
-        icHome_select.setBounds(0,0,icHome_select.getMinimumWidth(),icHome_select.getMinimumHeight());
-        icHome_unselected = getResources().getDrawable(R.drawable.ic_home_unselected);
-        icHome_unselected.setBounds(0,0,icHome_unselected.getMinimumWidth(),icHome_unselected.getMinimumHeight());
-        icMessage_select = getResources().getDrawable(R.drawable.ic_message);
-        icMessage_select.setBounds(0,0,icMessage_select.getMinimumWidth(),icMessage_select.getMinimumHeight());
-        icMessage_unselected = getResources().getDrawable(R.drawable.ic_message_unselected);
-        icMessage_unselected.setBounds(0,0,icMessage_unselected.getMinimumWidth(),icMessage_unselected.getMinimumHeight());
-        icMe_select = getResources().getDrawable(R.drawable.ic_me);
-        icMe_select.setBounds(0,0,icMe_select.getMinimumWidth(),icMe_select.getMinimumHeight());
-        icMe_unselected = getResources().getDrawable(R.drawable.ic_me_unselected);
-        icMe_unselected.setBounds(0,0,icMe_unselected.getMinimumWidth(),icMessage_unselected.getMinimumHeight());
+        init();
 
         btHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +59,26 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void init(){
+
+        btHome = findViewById(R.id.btMain);
+        btMessage = findViewById(R.id.btMessage);
+        btMe = findViewById(R.id.btMe);
+
+        icHome_select = getResources().getDrawable(R.drawable.ic_home);
+        icHome_select.setBounds(0,0,icHome_select.getMinimumWidth(),icHome_select.getMinimumHeight());
+        icHome_unselected = getResources().getDrawable(R.drawable.ic_home_unselected);
+        icHome_unselected.setBounds(0,0,icHome_unselected.getMinimumWidth(),icHome_unselected.getMinimumHeight());
+        icMessage_select = getResources().getDrawable(R.drawable.ic_message);
+        icMessage_select.setBounds(0,0,icMessage_select.getMinimumWidth(),icMessage_select.getMinimumHeight());
+        icMessage_unselected = getResources().getDrawable(R.drawable.ic_message_unselected);
+        icMessage_unselected.setBounds(0,0,icMessage_unselected.getMinimumWidth(),icMessage_unselected.getMinimumHeight());
+        icMe_select = getResources().getDrawable(R.drawable.ic_me);
+        icMe_select.setBounds(0,0,icMe_select.getMinimumWidth(),icMe_select.getMinimumHeight());
+        icMe_unselected = getResources().getDrawable(R.drawable.ic_me_unselected);
+        icMe_unselected.setBounds(0,0,icMe_unselected.getMinimumWidth(),icMessage_unselected.getMinimumHeight());
 
     }
 

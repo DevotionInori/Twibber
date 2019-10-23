@@ -13,9 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottom">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -33,7 +31,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/ic_home_unselected"
             android:text="首页"
-            android:background="#FFFFFFFF"/>
+            android:background="#FFFFFFFF"
+            android:stateListAnimator="@null"/>
 
         <Button
             android:id="@+id/btMessage"
@@ -42,7 +41,8 @@
             android:layout_weight="1"
             android:drawableTop="@drawable/ic_message_unselected"
             android:text="消息"
-            android:background="#FFFFFFFF"/>
+            android:background="#FFFFFFFF"
+            android:stateListAnimator="@null"/>
 
         <Button
             android:id="@+id/btMe"
@@ -51,7 +51,8 @@
             android:layout_weight="1"
             android:text="我"
             android:drawableTop="@drawable/ic_me_unselected"
-            android:background="#FFFFFFFF"/>
+            android:background="#FFFFFFFF"
+            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 
