@@ -6,11 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".HomePage">
 
-    <view class="androidx.appcompat.app.AlertController$RecycleListView"
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_home"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" >
 
-    </view>
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:realtimeBlurRadius="20dp"
+        app:realtimeOverlayColor="#6600B2FF"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#6600B2FF"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

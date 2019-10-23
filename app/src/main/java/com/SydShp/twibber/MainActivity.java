@@ -1,7 +1,12 @@
 package com.SydShp.twibber;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -20,12 +25,15 @@ public class MainActivity extends AppCompatActivity {
     Drawable icMe_select;
     Drawable icMe_unselected;
 
+    private ConstraintLayout layout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         init();
+
 
         btHome.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 btHome.setCompoundDrawables(null,icHome_select,null,null);
                 btMe.setCompoundDrawables(null,icMe_unselected,null,null);
                 btMessage.setCompoundDrawables(null,icMessage_unselected,null,null);
-
+                changeFragment(new HomeFragment());
             }
         });
 
@@ -63,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void init(){
 
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+
         btHome = findViewById(R.id.btMain);
         btMessage = findViewById(R.id.btMessage);
         btMe = findViewById(R.id.btMe);
@@ -82,5 +93,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void changeFragment(Fragment fragment){
+        //实例化碎片管理器对象
+        FragmentManager fm=getSupportFragmentManager();
+        FragmentTransaction ft=fm.beginTransaction();
+        //选择fragment替换的部分
+        ft.replace(R.id.content,fragment);
+        ft.commit();
+    }
 
 }

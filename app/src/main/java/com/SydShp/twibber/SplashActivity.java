@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.view.Window;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -25,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);	//第二个参数即为执行完跳转后的Activity
                 startActivity(intent);
-                overridePendingTransition(R.anim.left_tran_in, R.anim.left_tran_out);
+                overridePendingTransition(R.anim.fade_out, R.anim.fade_in);
                 SplashActivity.this.finish();   //关闭SplashActivity，将其回收，否则按返回键会返回此界面
             }
         }, SPLASH_DISPLAY_LENGHT);
