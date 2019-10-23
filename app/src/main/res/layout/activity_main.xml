@@ -36,6 +36,7 @@
             android:background="#FFFFFFFF"/>
 
         <Button
+            android:id="@+id/btMessage"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
