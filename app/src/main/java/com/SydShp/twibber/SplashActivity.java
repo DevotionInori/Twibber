@@ -25,6 +25,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashActivity.this, MainActivity.class);	//第二个参数即为执行完跳转后的Activity
                 startActivity(intent);
+                overridePendingTransition(R.anim.left_tran_in, R.anim.left_tran_out);
                 SplashActivity.this.finish();   //关闭SplashActivity，将其回收，否则按返回键会返回此界面
             }
         }, SPLASH_DISPLAY_LENGHT);
