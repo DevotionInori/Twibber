@@ -16,14 +16,13 @@
     <com.github.mmin18.widget.RealtimeBlurView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:realtimeBlurRadius="20dp"
-        app:realtimeOverlayColor="#6600B2FF"
+        app:realtimeBlurRadius="10dp"
+        app:realtimeOverlayColor="#9900B2FF"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="#6600B2FF"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
