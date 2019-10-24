@@ -64,5 +64,6 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
             TextView view = getView(id);
             view.setText(value);
         }
+
     }
 }

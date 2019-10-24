@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F2F2F2"
     tools:context=".HomePage">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -16,8 +17,8 @@
     <com.github.mmin18.widget.RealtimeBlurView
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        app:realtimeBlurRadius="10dp"
-        app:realtimeOverlayColor="#9900B2FF"
+        app:realtimeBlurRadius="15dp"
+        app:realtimeOverlayColor="#DD1CA1F0"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
