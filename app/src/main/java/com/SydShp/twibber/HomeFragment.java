@@ -50,7 +50,9 @@ public class HomeFragment extends Fragment {
         data.add("Devotion");
         data.add("Devotion");
         data.add("Devotion");
-        data.add("Devotion");data.add("Devotion");data.add("Devotion");
+        data.add("Devotion");
+        data.add("Devotion");
+        data.add("Devotion");
         data.add("Devotion");
         data.add("Devotion");
         data.add("Devotion");

@@ -67,6 +67,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        btHome.setCompoundDrawables(null,icHome_select,null,null);
+        btMe.setCompoundDrawables(null,icMe_unselected,null,null);
+        btMessage.setCompoundDrawables(null,icMessage_unselected,null,null);
+        changeFragment(new HomeFragment());
     }
 
     private void init(){
