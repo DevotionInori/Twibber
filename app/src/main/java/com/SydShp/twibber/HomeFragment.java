@@ -13,11 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.WeakHashMap;
 
 public class HomeFragment extends Fragment {
 
@@ -35,7 +31,7 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.activity_home_page,container,false);
+        View view=inflater.inflate(R.layout.fragment_home_page,container,false);
         init(view);
         return  view;
     }
@@ -69,7 +65,7 @@ public class HomeFragment extends Fragment {
                 2019,10,24,14,22));
 
 
-        QuickAdapter adapter = new QuickAdapter<Twibber>(data) {
+        QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
             @Override
             public int getLayoutId(int viewType) {
                 return R.layout.twibber_item;
@@ -84,6 +80,8 @@ public class HomeFragment extends Fragment {
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
+        adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
+        adapter.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
         recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
     }
 
