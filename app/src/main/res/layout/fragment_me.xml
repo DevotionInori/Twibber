@@ -19,6 +19,7 @@
             app:expandedTitleGravity="bottom|center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:expandedTitleTextAppearance="@style/toolbarTitle"
+            app:collapsedTitleTextAppearance="@style/toolbarTitle"
             app:expandedTitleMarginBottom="50dp"
             android:minHeight="50dp"
             app:contentScrim="@color/colorPrimaryDark"

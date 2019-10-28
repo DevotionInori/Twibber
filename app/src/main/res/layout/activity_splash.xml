@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:src="@mipmap/ic_splash"
         android:scaleType="fitXY"
+        android:fitsSystemWindows="false"
         app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
