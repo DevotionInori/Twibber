@@ -3,6 +3,7 @@ package com.SydShp.twibber;
 import java.util.Calendar;
 
 public class Twibber {
+    private int userID;
     String username;
     String content;
     int year;
