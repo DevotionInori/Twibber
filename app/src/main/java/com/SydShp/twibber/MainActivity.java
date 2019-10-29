@@ -6,17 +6,22 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     Button btHome;
     Button btSearch;
     Button btMe;
+
+    private FloatingActionButton faButton;
 
     Drawable icHome_select;
     Drawable icHome_unselected;
@@ -69,6 +74,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        faButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(MainActivity.this,AddTwibber.class);
+                startActivity(in);
+            }
+        });
+
+
         btHome.setCompoundDrawables(null,icHome_select,null,null);
         btMe.setCompoundDrawables(null,icMe_unselected,null,null);
         btSearch.setCompoundDrawables(null,icSearch_unselected,null,null);
@@ -83,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         btHome = findViewById(R.id.btMain);
         btSearch = findViewById(R.id.btSearch);
         btMe = findViewById(R.id.btMe);
+        faButton=findViewById(R.id.add_twibber);
 
         icHome_select = getResources().getDrawable(R.drawable.ic_home);
         icHome_select.setBounds(0,0,icHome_select.getMinimumWidth(),icHome_select.getMinimumHeight());

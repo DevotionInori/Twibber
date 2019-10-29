@@ -10,10 +10,11 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.List;
 
 // ① 创建Adapter
-public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.VH>{
+public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.VH> implements Serializable {
 
     private RecyclerView mRecyclerView;
 

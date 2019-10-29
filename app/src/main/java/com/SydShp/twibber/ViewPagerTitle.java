@@ -78,7 +78,7 @@ public class ViewPagerTitle extends LinearLayout {
         for (int i = 0; i < titles.length; i++) {
             TextView textView = new TextView(getContext());
             textView.setText(titles[i]);
-            textView.setTextColor(Color.GRAY);
+            textView.setTextColor(Color.WHITE);
             textView.setTextSize(18);
             textView.setLayoutParams(params);
             textView.setGravity(Gravity.CENTER);
@@ -99,7 +99,7 @@ public class ViewPagerTitle extends LinearLayout {
                     ((TextView) v).setTextColor(Color.BLACK);
                     ((TextView) v).setTextSize(22);
                 } else {
-                    textViews.get(i).setTextColor(Color.GRAY);
+                    textViews.get(i).setTextColor(Color.WHITE);
                     textViews.get(i).setTextSize(18);
                 }
             }
@@ -117,7 +117,7 @@ public class ViewPagerTitle extends LinearLayout {
                 textViews.get(i).setTextColor(Color.BLACK);
                 textViews.get(i).setTextSize(20);
             } else {
-                textViews.get(i).setTextColor(Color.GRAY);
+                textViews.get(i).setTextColor(Color.WHITE);
                 textViews.get(i).setTextSize(18);
             }
         }

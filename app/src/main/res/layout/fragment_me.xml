@@ -35,7 +35,7 @@
                 app:layout_collapseParallaxMultiplier="0.9"
                 android:fitsSystemWindows="true"/>
 
-            <com.shehuan.niv.NiceImageView
+            <com.SydShp.twibber.NiceImageView
                 android:id="@+id/me_head"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
