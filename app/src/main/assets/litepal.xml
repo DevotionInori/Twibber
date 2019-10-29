@@ -14,7 +14,11 @@
     	</list>
     -->
 
-    <list></list>
+    <list>
+        <mapping class="com.SydShp.twibber.model.twibber"></mapping>
+        <mapping class="com.SydShp.twibber.model.user"></mapping>
+        <mapping class="com.SydShp.twibber.model.userRelation"></mapping>
+    </list>
 
     <!--
         Define where the .db file should be. "internal" means the .db file

@@ -5,11 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Twibber {
-    private int id;
-    private int userID;
     private String username;
     private String content;
     private Date date;
+    private int id;
+    private int publisherID;
+    private int likeCount;
+    private int transferCount;
 
     public Twibber(String username, String content) {
         this.username = username;
