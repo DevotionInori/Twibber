@@ -7,24 +7,30 @@
     android:background="#F2F2F2"
     tools:context=".HomePage">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycle_home"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_page_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_change">
+        app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.viewpager.widget.ViewPager>
 
     <com.github.mmin18.widget.RealtimeBlurView
+        android:id="@+id/blur"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="70dp"
         app:realtimeBlurRadius="15dp"
         app:realtimeOverlayColor="#DD1CA1F0"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.SydShp.twibber.ViewPagerTitle
+        android:id="@+id/horizontal_SV"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_height="30dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/blur">
+
+    </com.SydShp.twibber.ViewPagerTitle>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

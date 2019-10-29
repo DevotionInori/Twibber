@@ -52,17 +52,6 @@
             android:background="#00FFFFFF"
             android:stateListAnimator="@null"/>
 
-
-        <Button
-            android:id="@+id/btMessage"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_message_unselected"
-            android:text="消息"
-            android:background="#00FFFFFF"
-            android:stateListAnimator="@null"/>
-
         <Button
             android:id="@+id/btMe"
             android:layout_width="100dp"
