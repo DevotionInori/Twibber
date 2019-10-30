@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LogIn extends AppCompatActivity {
 
@@ -99,7 +101,14 @@ public class LogIn extends AppCompatActivity {
                     }else if (TextUtils.isEmpty(pwdLogIn.getText())){
                         Toast.makeText(LogIn.this, "请输入密码", Toast.LENGTH_SHORT).show();
                     }else {
-
+                        List<User> tryUser = LitePal.where("loginId = ?",idLogIn.getText().toString()).find(User.class);
+                        if (tryUser.isEmpty()) {
+                            Toast.makeText(LogIn.this, "用户不存在！", Toast.LENGTH_SHORT).show();
+                        }
+                        if (tryUser.get(0).getPassWd() == pwdLogIn.getText().toString()){
+                            //todo:宋亚东来写登录功能
+                            Toast.makeText(LogIn.this, "success", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                 }
@@ -117,9 +126,35 @@ public class LogIn extends AppCompatActivity {
                     //user.setPassWd(pwdRegister.getText().toString());
                     //user.setName(nameRegister.getText().toString());
                     //user.save();
-                    Snackbar.make(v,"注册成功!",Snackbar.LENGTH_LONG).show();
-                    pwdRegister.setText("");
-                    nameRegister.setText("");
+//                    Snackbar.make(v,"注册成功!",Snackbar.LENGTH_LONG).show();
+                    if (TextUtils.isEmpty(idRegister.getText())) {
+                        Toast.makeText(LogIn.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    }else if (TextUtils.isEmpty(pwdRegister.getText())){
+                        Toast.makeText(LogIn.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    }else if (TextUtils.isEmpty(nameRegister.getText())){
+                        Toast.makeText(LogIn.this, "请输入昵称", Toast.LENGTH_SHORT).show();
+                    }else {
+                        List<User> tryUser = LitePal.where("loginId = ?",idLogIn.getText().toString()).find(User.class);
+                        //Toast.makeText(LogIn.this, tryUser.size(), Toast.LENGTH_SHORT).show();
+                        //todo:nmd wsm
+                        if (!tryUser.isEmpty()) {
+                            Toast.makeText(LogIn.this, tryUser.get(0).getPassWd(), Toast.LENGTH_SHORT).show();
+                        }else {
+                            User regUser = new User();
+                            regUser.setLoginId(idRegister.getText().toString());
+                            regUser.setPassWd(pwdRegister.getText().toString());
+                            regUser.setName(nameRegister.getText().toString());
+                            regUser.save();
+
+                            pwdRegister.setText("");
+                            nameRegister.setText("");
+//                            try {
+//
+//                            }catch (Exception e){
+//                                Toast.makeText(LogIn.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+                        }
+                    }
                 }
             });
         }
