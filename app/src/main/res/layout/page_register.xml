@@ -22,7 +22,7 @@
             android:layout_height="50dp"
             android:textCursorDrawable="@drawable/edit_cursor">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/uesrid"
+                android:id="@+id/register_uesrid"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@null"
@@ -39,7 +39,7 @@
             app:passwordToggleEnabled="true"
             android:textCursorDrawable="@drawable/edit_cursor">
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/password"
+                android:id="@+id/register_password"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@null"
