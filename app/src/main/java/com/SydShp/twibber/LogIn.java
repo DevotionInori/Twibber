@@ -2,20 +2,28 @@ package com.SydShp.twibber;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+
+import java.util.ArrayList;
 
 public class LogIn extends AppCompatActivity {
 
     private Button btnLogIn;
     private Button btnLogOn;
     private Button btnReg;
+    private ViewPager vp;
+    private ViewPagerTitle hsv;
 
 
     @Override
@@ -39,27 +47,39 @@ public class LogIn extends AppCompatActivity {
             }
         });
 
-        btnReg.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(btnLogIn.getVisibility()==View.VISIBLE){
-                    btnReg.setText("登录");
-                    btnLogIn.setVisibility(View.GONE);
-                    btnLogOn.setVisibility(View.VISIBLE);
-                }else{
-                    btnReg.setText("注册");
-                    btnLogIn.setVisibility(View.VISIBLE);
-                    btnLogOn.setVisibility(View.GONE);
-                }
-            }
-        });
 
     }
 
     private void init(){
-        btnLogIn=findViewById(R.id.btn_log_in);
-        btnLogOn=findViewById(R.id.btn_log_on);
-        btnReg=findViewById(R.id.btn_register);
+        vp=(ViewPager)findViewById(R.id.view_page_log);
+        ArrayList<View> views = new ArrayList<>();
+        hsv = (ViewPagerTitle)findViewById(R.id.log_vpTitle);
+        hsv.initData(new String[]{"登录", "注册"}, vp, 0);
+
+        LayoutInflater inflater = getLayoutInflater();
+        views = new ArrayList<>();
+        views.add(inflater.inflate(R.layout.page_log_in, null));
+        views.add(inflater.inflate(R.layout.page_register, null));
+
+
+
+
+        MyPagerAdapter adapter = new MyPagerAdapter(views){
+            @Override
+            public Object instantiateItem(ViewGroup container, int position) {
+                initPage((View)super.instantiateItem(container, position),position);
+                return super.instantiateItem(container, position);
+            }
+        };
+        vp.setAdapter(adapter);
+    }
+
+    public void initPage(View view, int position) {
+        if (position % 2 == 0) {
+            btnLogIn=view.findViewById(R.id.btn_log_in);
+        } else {
+            btnLogOn=view.findViewById(R.id.btn_register);
+        }
     }
 
 

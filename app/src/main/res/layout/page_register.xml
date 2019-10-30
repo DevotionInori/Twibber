@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/login_ll"
+        android:layout_width="300dp"
+        android:layout_height="170dp"
+        android:background="@drawable/round_out"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="300dp"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textCursorDrawable="@drawable/edit_cursor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/uesrid"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:paddingLeft="15dp"
+                android:textCursorDrawable="@drawable/edit_cursor"
+                android:inputType="text"
+                android:hint="账号" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:passwordToggleEnabled="true"
+            android:textCursorDrawable="@drawable/edit_cursor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:paddingLeft="15dp"
+                android:gravity="left|center"
+                android:textCursorDrawable="@drawable/edit_cursor"
+                android:inputType="textPassword"
+                android:hint="密码"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textCursorDrawable="@drawable/edit_cursor">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/register_name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@null"
+                android:paddingLeft="15dp"
+                android:gravity="left|center"
+                android:textCursorDrawable="@drawable/edit_cursor"
+                android:inputType="text"
+                android:hint="昵称"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:text="注册"
+        app:layout_constraintTop_toBottomOf="@id/login_ll"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/btn_bg_white"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
