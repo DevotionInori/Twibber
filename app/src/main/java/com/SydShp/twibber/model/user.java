@@ -10,6 +10,7 @@ public class user extends LitePalSupport {
     @Column(unique = true)
     private String name;
 
+    @Column(unique = true)
     private String loginId;
     private String passWd;
 
