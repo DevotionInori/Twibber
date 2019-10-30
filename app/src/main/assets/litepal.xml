@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <litepal>
     <dbname value="Twibber" />
-    <version value="2" />
+    <version value="3" />
 
     <!--
     	Define your models in the list with mapping tag, LitePal will
@@ -15,9 +15,9 @@
     -->
 
     <list>
-        <mapping class="com.SydShp.twibber.model.twibber"></mapping>
-        <mapping class="com.SydShp.twibber.model.user"></mapping>
-        <mapping class="com.SydShp.twibber.model.userRelation"></mapping>
+        <mapping class="com.SydShp.twibber.model.TTwibber"></mapping>
+        <mapping class="com.SydShp.twibber.model.User"></mapping>
+        <mapping class="com.SydShp.twibber.model.UserRelation"></mapping>
     </list>
 
     <!--

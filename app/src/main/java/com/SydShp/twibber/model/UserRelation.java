@@ -2,11 +2,11 @@ package com.SydShp.twibber.model;
 
 import org.litepal.crud.LitePalSupport;
 
-public class userRelation extends LitePalSupport {
+public class UserRelation extends LitePalSupport {
 
-    int id;
-    int userId;
-    int followId;
+    private int id;
+    private int userId;
+    private int followId;
 
     //Auto generated getter and setter below
     public int getId() {

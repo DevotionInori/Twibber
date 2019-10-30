@@ -3,15 +3,16 @@ package com.SydShp.twibber.model;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
-public class user extends LitePalSupport {
+public class User extends LitePalSupport {
 
     private int id;
 
     @Column(unique = true)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String loginId;
+    @Column(nullable = false)
     private String passWd;
 
     @Column(defaultValue = "0")

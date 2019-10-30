@@ -5,7 +5,7 @@ import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
 
-public class twibber extends LitePalSupport {
+public class TTwibber extends LitePalSupport {
 
     private int id;
     private String username;
@@ -72,5 +72,4 @@ public class twibber extends LitePalSupport {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }

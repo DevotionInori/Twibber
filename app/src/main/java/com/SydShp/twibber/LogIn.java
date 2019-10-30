@@ -7,6 +7,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,7 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.SydShp.twibber.model.user;
+import com.SydShp.twibber.model.User;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -93,6 +94,13 @@ public class LogIn extends AppCompatActivity {
             btnLogIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (TextUtils.isEmpty(idLogIn.getText())) {
+                        Toast.makeText(LogIn.this, "请输入用户名", Toast.LENGTH_SHORT).show();
+                    }else if (TextUtils.isEmpty(pwdLogIn.getText())){
+                        Toast.makeText(LogIn.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                    }else {
+
+                    }
 
                 }
             });
