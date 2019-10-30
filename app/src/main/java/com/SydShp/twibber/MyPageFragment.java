@@ -1,13 +1,18 @@
 package com.SydShp.twibber;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +25,9 @@ public class MyPageFragment extends Fragment {
     private Context mContext;
     private RecyclerView recyclerView;
     private List<Twibber> data;
-
+    private Button login;
+    private TextView tip;
+    private Toolbar toolbar;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -35,8 +42,34 @@ public class MyPageFragment extends Fragment {
         return  view;
     }
 
+
+
+
     private void init(View view){
         recyclerView = view.findViewById(R.id.recycle_me);
+        login=view.findViewById(R.id.log_in);
+        tip=view.findViewById(R.id.empty_rep_text);
+        toolbar=view.findViewById(R.id.toolbar);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(mContext,LogIn.class);
+                startActivity(in);
+            }
+        });
+
+        SharedPreferences sp = mContext.getSharedPreferences("login",mContext.MODE_PRIVATE);
+        if(sp.getString("username",null)!=null){
+            toolbar.setTitle(sp.getString("username",null));
+            tip.setVisibility(View.GONE);
+            login.setVisibility(View.GONE);
+        }
+        else{
+            toolbar.setTitle("请先登录");
+            tip.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+        }
         data=new ArrayList<Twibber>();
         data.add(new Twibber("Devotion","hhhhhhhhhhhhhhhhhhhhh"));
         data.add(new Twibber("Devotion","哈哈哈哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
@@ -77,7 +110,4 @@ public class MyPageFragment extends Fragment {
         adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
         recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
     }
-
-
-
 }

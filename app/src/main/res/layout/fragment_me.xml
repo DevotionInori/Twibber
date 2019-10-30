@@ -55,6 +55,15 @@
                 app:title="标题"
                 android:fitsSystemWindows="true"/>
 
+            <Button
+                android:id="@+id/log_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="登录"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/btn_bg_blue"
+                android:layout_gravity="end"/>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -74,6 +83,12 @@
 
     </androidx.core.widget.NestedScrollView>
 
-
+    <TextView
+        android:id="@+id/empty_rep_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:text="请先登录"
+        android:gravity="center"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
