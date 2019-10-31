@@ -156,7 +156,6 @@ public class HomeFragment extends Fragment {
                         for (LikeRelation i :
                                 likes) {
                             if(i.getContenterId()==data.getId()){
-
                                 holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
                             }
                         }

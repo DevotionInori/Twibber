@@ -94,15 +94,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:id="@+id/ll_three"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
+        android:translationZ="2dp"
         app:layout_constraintTop_toBottomOf="@+id/cl_twibber">
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="评论"
@@ -110,7 +111,7 @@
             android:id="@+id/tv_twibber_comment"/>
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="#000000"
@@ -146,6 +147,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#00000000"
+            android:id="@+id/btn_tb_comment"
             android:src="@drawable/ic_action_comment"/>
 
         <ImageButton

@@ -64,4 +64,8 @@ public abstract class CommentAdapter<T> extends RecyclerView.Adapter<CommentAdap
             view.setText(value);
         }
     }
+
+    public void setmDatas(List<T> datas){
+        mDatas=datas;
+    }
 }
