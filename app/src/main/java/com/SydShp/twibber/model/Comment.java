@@ -2,15 +2,12 @@ package com.SydShp.twibber.model;
 
 import org.litepal.crud.LitePalSupport;
 
-public class Content extends LitePalSupport {
+public class Comment extends LitePalSupport {
 
     private int id;
     private int twibberId;
-    private String content;
-
-
-
-    private String contenterId;
+    private String comment;
+    private int commenterId;
 
     //Auto generated getter and setter below
 
@@ -30,19 +27,19 @@ public class Content extends LitePalSupport {
         this.twibberId = twibberId;
     }
 
-    public String getContent() {
-        return content;
+    public String getComment() {
+        return comment;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
-    public String getContenterId() {
-        return contenterId;
+    public int getCommenterId() {
+        return commenterId;
     }
 
-    public void setContenterId(String contenterId) {
-        this.contenterId = contenterId;
+    public void setCommenterId(int commenterId) {
+        this.commenterId = commenterId;
     }
 }

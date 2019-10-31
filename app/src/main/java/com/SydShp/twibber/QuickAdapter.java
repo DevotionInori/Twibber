@@ -63,7 +63,6 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
             convert(holder, mDatas.get(position), position);
             final int p = position;
 
-
             holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

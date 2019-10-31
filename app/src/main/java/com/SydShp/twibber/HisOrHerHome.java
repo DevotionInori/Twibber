@@ -8,13 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.SydShp.twibber.model.Comment;
 import com.SydShp.twibber.model.LikeRelation;
 import com.SydShp.twibber.model.Twibber;
 import com.SydShp.twibber.model.User;
@@ -37,6 +44,8 @@ public class HisOrHerHome extends AppCompatActivity {
     private Twibber twibber;
     private TextView fansCount;
     private TextView followCount;
+    private PopupWindow popupWindow;
+    private View contentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +136,7 @@ public class HisOrHerHome extends AppCompatActivity {
             }
 
             @Override
-            public void convert(final VH holder, Twibber data, int position) {
+            public void convert(final VH holder, final Twibber data, int position) {
                 holder.setText(R.id.nameText, data.getUsername());
                 holder.setText(R.id.timeText,getThisTime(data.getDate()));
                 holder.setText(R.id.twibberContent,data.getContent());
@@ -135,7 +144,7 @@ public class HisOrHerHome extends AppCompatActivity {
                 final Twibber twibber = data;
 
                 SharedPreferences sp =getSharedPreferences("login", Context.MODE_PRIVATE);
-                int uid=sp.getInt("id",-1);
+                final int uid=sp.getInt("id",-1);
                 if(uid!=-1){
                     List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
                     for (LikeRelation i :
@@ -146,6 +155,43 @@ public class HisOrHerHome extends AppCompatActivity {
                         }
                     }
                 }
+
+                holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        contentView = LayoutInflater.from(HisOrHerHome.this).inflate(
+                                R.layout.pop_edit_text, null);
+                        popupWindow = new PopupWindow(contentView,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+                        popupWindow.setFocusable(true);// 取得焦点
+                        //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+                        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                        //点击外部消失
+                        popupWindow.setOutsideTouchable(true);
+                        //设置可以点击
+                        popupWindow.setTouchable(true);
+                        //进入退出的动画，指定刚才定义的style
+                        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+                        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+                        contentView.findViewById(R.id.btn_comment).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditText editText = contentView.findViewById(R.id.et_comment);
+                                Comment comment = new Comment();
+                                comment.setTwibberId(data.getId());
+                                comment.setCommenterId(uid);
+                                comment.setComment(editText.getText().toString());
+                                comment.save();
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setCommentCount(twibber1.getCommentCount()+1);
+                                twibber1.save();
+                                popupWindow.dismiss();
+                                Toast.makeText(HisOrHerHome.this,"评论成功",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
 
                 holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
                     @Override
