@@ -3,6 +3,9 @@ package com.SydShp.twibber;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SearchView;
 
 import android.text.TextUtils;
@@ -78,6 +81,12 @@ public class SearchUserActivity extends AppCompatActivity {
         for (int i=0;i<UserList.size();i++){
             mStrs.add(UserList.get(i).getName());
             mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrs));
+            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    mSearchView.setQueryHint(mStrs.get(position));
+                }
+            });
             userMap.put(UserList.get(i).getId(),UserList.get(i).getName());
         }
     }
