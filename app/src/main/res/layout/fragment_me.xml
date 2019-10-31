@@ -45,6 +45,29 @@
                 app:border_color="@color/colorPrimaryDark"
                 app:is_circle="true"/>
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="45dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="粉丝:"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/my_fans"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="关注:"
+                    android:textColor="#FFFFFF"
+                    android:id="@+id/my_follows"/>
+
+            </LinearLayout>
+
+
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
@@ -53,6 +76,7 @@
                 android:gravity="center"
                 app:titleTextColor="#FFFFFF"
                 app:title="标题"
+                app:contentInsetRight="30dp"
                 android:fitsSystemWindows="true"/>
 
             <Button

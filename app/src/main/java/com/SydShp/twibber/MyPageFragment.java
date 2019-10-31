@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.SydShp.twibber.model.Twibber;
+import com.SydShp.twibber.model.User;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.litepal.LitePal;
@@ -36,6 +38,11 @@ public class MyPageFragment extends Fragment {
     private TextView tip;
     private Toolbar toolbar;
     private CollapsingToolbarLayout  collapsingToolbarLayout;
+    private QuickAdapter adapter;
+    private TextView fansCount;
+    private TextView followCount;
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -50,13 +57,28 @@ public class MyPageFragment extends Fragment {
             tip.setVisibility(View.GONE);
             login.setText("登出");
             recyclerView.setVisibility(View.VISIBLE);
+            User user = LitePal.find(User.class,sp.getInt("id",0));
+            fansCount.setVisibility(View.VISIBLE);
+            followCount.setVisibility(View.VISIBLE);
+            fansCount.setText("粉丝:"+user.getFans_count());
+            followCount.setText("关注:"+user.getFollow_count());
         }
         else{
             collapsingToolbarLayout.setTitle("请先登录");
             tip.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
             login.setText("登录");
+            fansCount.setVisibility(View.GONE);
+            followCount.setVisibility(View.GONE);
         }
+        List<Twibber> mTwibber;
+        if(sp.getInt("id",-1)!=-1){
+            data.clear();
+            mTwibber = LitePal.where("publisherID = ?", ""+sp.getInt("id",0)).find(Twibber.class);
+            data.addAll(mTwibber);
+        }
+        adapter.notifyDataSetChanged();
+        adapter.setmDatas(data);
         super.onResume();
     }
 
@@ -77,6 +99,8 @@ public class MyPageFragment extends Fragment {
         tip=view.findViewById(R.id.empty_rep_text);
         toolbar=view.findViewById(R.id.toolbar);
         collapsingToolbarLayout=view.findViewById(R.id.mCollapsingToolbarLayout);
+        fansCount=view.findViewById(R.id.my_fans);
+        followCount=view.findViewById(R.id.my_follows);
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +122,11 @@ public class MyPageFragment extends Fragment {
             tip.setVisibility(View.GONE);
             login.setText("登出");
             recyclerView.setVisibility(View.VISIBLE);
+            User user = LitePal.find(User.class,sp.getInt("id",0));
+            String s = "粉丝:"+user.getFans_count();
+            fansCount.setText(s);
+            s = "关注:"+user.getFollow_count();
+            followCount.setText(s);
         }
         else{
             toolbar.setTitle("请先登录");
@@ -115,7 +144,7 @@ public class MyPageFragment extends Fragment {
         }
 
 
-        QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
+        adapter = new QuickAdapter<Twibber>(data,mContext) {
             @Override
             public int getLayoutId(int viewType) {
                 return R.layout.twibber_item;

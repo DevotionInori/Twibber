@@ -60,9 +60,11 @@ public class HomeFragment extends Fragment {
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
             if(sp.getString("username",null)!=null){
                 logInTip1.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
             }
             else{
                 logInTip1.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
 
             }
             if(sp.getInt("id",0)!=0){
@@ -104,11 +106,15 @@ public class HomeFragment extends Fragment {
 
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
             if(sp.getString("username",null)!=null){
-
+                recyclerView.setVisibility(View.VISIBLE);
                 logInTip1.setVisibility(View.GONE);
             }
-            else
+            else{
                 logInTip1.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+            }
+
+
 
 
             if(sp.getInt("id",-1)!=-1){
@@ -142,6 +148,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent in = new Intent(mContext,HisOrHerHome.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
                             mContext.startActivity(in);
                         }
                     });
@@ -149,6 +156,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onClick(View v) {
                             Intent in = new Intent(mContext,HisOrHerHome.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
                             mContext.startActivity(in);
                         }
                     });
@@ -200,6 +208,41 @@ public class HomeFragment extends Fragment {
                     holder.setText(R.id.nameText, data.getUsername());
                     holder.setText(R.id.timeText,getThisTime(data.getDate()));
                     holder.setText(R.id.twibberContent,data.getContent());
+
+                    final int p = position;
+
+                    holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,HisOrHerHome.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.getView(R.id.nameText).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,HisOrHerHome.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.getView(R.id.twibberContent).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,TwibberPage.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,TwibberPage.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
