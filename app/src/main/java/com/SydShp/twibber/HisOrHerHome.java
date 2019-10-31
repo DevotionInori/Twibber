@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -30,6 +31,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.litepal.LitePal;
 
+import java.io.Serializable;
 import java.util.List;
 
 import static com.SydShp.twibber.HomeFragment.getThisTime;
@@ -155,6 +157,15 @@ public class HisOrHerHome extends AppCompatActivity {
                         }
                     }
                 }
+
+                holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in = new Intent(HisOrHerHome.this,AddTwibber.class);
+                        in.putExtra("TransferTwibber",(Serializable) data);
+                        startActivity(in);
+                    }
+                });
 
                 holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
                     @Override

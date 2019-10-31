@@ -20,6 +20,7 @@ public class AddTwibber extends AppCompatActivity {
     private Button publicTb;
     private TextView UserName;
     private TextInputEditText inputEditText;
+    private Twibber tranfer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,5 +66,9 @@ public class AddTwibber extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
         UserName.setText(sp.getString("username",null));
 
+        if(getIntent().hasExtra("TransferTwibber")){
+            tranfer=(Twibber)getIntent().getSerializableExtra("TransferTwibber");
+            inputEditText.setText("@"+tranfer.getUsername()+":"+tranfer.getContent());
+        }
     }
 }

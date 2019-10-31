@@ -31,6 +31,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import org.litepal.LitePal;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -179,6 +180,15 @@ public class MyPageFragment extends Fragment {
                         }
                     }
                 }
+
+                holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in = new Intent(mContext,AddTwibber.class);
+                        in.putExtra("TransferTwibber",(Serializable) data);
+                        mContext.startActivity(in);
+                    }
+                });
 
                 holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
                     @Override

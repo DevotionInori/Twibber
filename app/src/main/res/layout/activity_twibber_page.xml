@@ -140,6 +140,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="#00000000"
+            android:id="@+id/btn_tb_transfer"
             android:src="@drawable/ic_action_trans"/>
 
         <ImageButton

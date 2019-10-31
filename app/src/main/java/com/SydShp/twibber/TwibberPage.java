@@ -38,18 +38,20 @@ public class TwibberPage extends AppCompatActivity {
     private TextView TwibberUserName;
     private TextView publishDate;
     private TextView TwibberContent;
+    private TextView tvComment;
+    private TextView tvLike;
+    private TextView tvName;
     private ImageButton btnLike;
+    private ImageButton ibComment;
+    private ImageButton btnTransfer;
+
     private List<Comment> data;
     private int uid;
     private Twibber twibber;
-    private TextView tvComment;
-    private TextView tvLike;
     private PopupWindow popupWindow;
     private View contentView;
     private CommentAdapter adapter;
-    private ImageButton ibComment;
     private NiceImageView avator;
-    private TextView tvName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,15 @@ public class TwibberPage extends AppCompatActivity {
             }
         });
 
+
+        btnTransfer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(TwibberPage.this,AddTwibber.class);
+                in.putExtra("TransferTwibber",(Serializable) twibber);
+                startActivity(in);
+            }
+        });
 
 
 
@@ -171,6 +182,7 @@ public class TwibberPage extends AppCompatActivity {
         ibComment=findViewById(R.id.btn_tb_comment);
         avator=findViewById(R.id.icAvatar_twibber);
         tvName=findViewById(R.id.nameText_twibber);
+        btnTransfer=findViewById(R.id.btn_tb_transfer);
 
 
         SharedPreferences sp = getSharedPreferences("login", MODE_PRIVATE);

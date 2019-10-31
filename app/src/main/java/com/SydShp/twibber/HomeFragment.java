@@ -1,6 +1,7 @@
 package com.SydShp.twibber;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import com.SydShp.twibber.model.UserRelation;
 
 import org.litepal.LitePal;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -56,6 +58,72 @@ public class HomeFragment extends Fragment {
         mContext=context;
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(logInTip1!=null){
+            data.clear();
+            SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+            if(sp.getString("username",null)!=null){
+                logInTip1.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+            else{
+                logInTip1.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
+
+            }
+            if(sp.getInt("id",0)!=0){
+                List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
+                for (UserRelation i :
+                        follow) {
+                    List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
+                    data.addAll(fTwibber);
+                }
+
+                List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
+                data.addAll(mTwibber);
+            }
+            adapterFollow.setmDatas(data);
+            adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            if(logInTip1!=null){
+                data.clear();
+                SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                if(sp.getString("username",null)!=null){
+                    logInTip1.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    logInTip1.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+
+                }
+                if(sp.getInt("id",0)!=0){
+                    List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
+                    for (UserRelation i :
+                            follow) {
+                        List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
+                        data.addAll(fTwibber);
+                    }
+
+                    List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
+                    data.addAll(mTwibber);
+                }
+                adapterFollow.setmDatas(data);
+                adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
+            }
+        } else {
+            //相当于Fragment的onPause
+        }
+    }
 
 
     @Override
@@ -160,6 +228,16 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }
+
+                    holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,AddTwibber.class);
+                            in.putExtra("TransferTwibber",(Serializable) data);
+                            onPause();
+                            mContext.startActivity(in);
+                        }
+                    });
 
                     holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -278,6 +356,17 @@ public class HomeFragment extends Fragment {
                             }
                         }
                     }
+
+                    holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,AddTwibber.class);
+                            in.putExtra("TransferTwibber",(Serializable) data);
+                            mContext.startActivity(in);
+                            onPause();
+                        }
+                    });
+
 
                     holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
                         @Override
