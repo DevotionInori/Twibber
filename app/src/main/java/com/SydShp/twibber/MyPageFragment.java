@@ -34,6 +34,7 @@ import org.litepal.LitePal;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -88,6 +89,7 @@ public class MyPageFragment extends Fragment {
             data.addAll(mTwibber);
         }
         adapter.notifyDataSetChanged();
+        Collections.sort(data);
         adapter.setmDatas(data);
         super.onResume();
     }
@@ -153,7 +155,7 @@ public class MyPageFragment extends Fragment {
             data.addAll(mTwibber);
         }
 
-
+        Collections.sort(data);
         adapter = new QuickAdapter<Twibber>(data,mContext) {
             @Override
             public int getLayoutId(int viewType) {

@@ -32,6 +32,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import org.litepal.LitePal;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 import static com.SydShp.twibber.HomeFragment.getThisTime;
@@ -130,7 +131,7 @@ public class HisOrHerHome extends AppCompatActivity {
 
 
         data=LitePal.where("publisherId = ?",""+user.getId()).find(Twibber.class);
-
+        Collections.sort(data);
         QuickAdapter adapter = new QuickAdapter<Twibber>(data,this) {
             @Override
             public int getLayoutId(int viewType) {

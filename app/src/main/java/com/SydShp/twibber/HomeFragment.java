@@ -32,6 +32,9 @@ import org.litepal.LitePal;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -51,6 +54,7 @@ public class HomeFragment extends Fragment {
     private QuickAdapter adapterLatest;
     private PopupWindow popupWindow;
     private View contentView;
+    private int uid;
 
     @Override
     public void onAttach(Context context) {
@@ -59,100 +63,24 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if(logInTip1!=null){
-            data.clear();
-            SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-            if(sp.getString("username",null)!=null){
-                logInTip1.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
-            }
-            else{
-                logInTip1.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
-
-            }
-            if(sp.getInt("id",0)!=0){
-                List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
-                for (UserRelation i :
-                        follow) {
-                    List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
-                    data.addAll(fTwibber);
-                }
-
-                List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
-                data.addAll(mTwibber);
-            }
-            adapterFollow.setmDatas(data);
-            adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
-        }
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser) {
-            //相当于Fragment的onResume
-            if(logInTip1!=null){
-                data.clear();
-                SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                if(sp.getString("username",null)!=null){
-                    logInTip1.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                else{
-                    logInTip1.setVisibility(View.VISIBLE);
-                    recyclerView.setVisibility(View.GONE);
-
-                }
-                if(sp.getInt("id",0)!=0){
-                    List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
-                    for (UserRelation i :
-                            follow) {
-                        List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
-                        data.addAll(fTwibber);
-                    }
-
-                    List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
-                    data.addAll(mTwibber);
-                }
-                adapterFollow.setmDatas(data);
-                adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
-            }
-        } else {
-            //相当于Fragment的onPause
-        }
-    }
-
-
-    @Override
     public void onResume() {
         if(logInTip1!=null){
             data.clear();
-            SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-            if(sp.getString("username",null)!=null){
-                logInTip1.setVisibility(View.GONE);
-                recyclerView.setVisibility(View.VISIBLE);
+            List<UserRelation> follow = LitePal.where("userId = ?",""+uid).find(UserRelation.class);
+            for (UserRelation i :
+                    follow) {
+                List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
+                data.addAll(fTwibber);
             }
-            else{
-                logInTip1.setVisibility(View.VISIBLE);
-                recyclerView.setVisibility(View.GONE);
 
-            }
-            if(sp.getInt("id",0)!=0){
-                List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
-                for (UserRelation i :
-                        follow) {
-                    List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
-                    data.addAll(fTwibber);
-                }
-
-                List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
-                data.addAll(mTwibber);
-            }
-            adapterFollow.setmDatas(data);
-            adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
+            List<Twibber> mTwibber = LitePal.where("publisherId=?",""+uid).find(Twibber.class);
+            data.addAll(mTwibber);
+            Collections.sort(data);
+            adapterFollow.notifyDataSetChanged();
+            adapterFollow=getAdapet(data);
+            data=LitePal.findAll(Twibber.class);
+            Collections.sort(data);
+            adapterLatest=getAdapet(data);
         }
         super.onResume();
     }
@@ -202,117 +130,8 @@ public class HomeFragment extends Fragment {
                 data.addAll(mTwibber);
             }
 
-
-            adapterFollow = new QuickAdapter<Twibber>(data,mContext) {
-                @Override
-                public int getLayoutId(int viewType) {
-                    return R.layout.twibber_item;
-                }
-
-                @Override
-                public void convert(final VH holder, final Twibber data, int position) {
-                    holder.setText(R.id.nameText, data.getUsername());
-                    holder.setText(R.id.timeText,getThisTime(data.getDate()));
-                    holder.setText(R.id.twibberContent,data.getContent());
-
-                    final Twibber twibber = data;
-
-                    SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                    final int uid=sp.getInt("id",-1);
-                    if(uid!=-1){
-                        List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
-                        for (LikeRelation i :
-                                likes) {
-                            if(i.getContenterId()==data.getId()){
-                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
-                            }
-                        }
-                    }
-
-                    holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,AddTwibber.class);
-                            in.putExtra("TransferTwibber",(Serializable) data);
-                            onPause();
-                            mContext.startActivity(in);
-                        }
-                    });
-
-                    holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            contentView = LayoutInflater.from(mContext).inflate(
-                                    R.layout.pop_edit_text, null);
-                            popupWindow = new PopupWindow(contentView,
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT);
-                            popupWindow.setFocusable(true);// 取得焦点
-                            //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
-                            popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                            //点击外部消失
-                            popupWindow.setOutsideTouchable(true);
-                            //设置可以点击
-                            popupWindow.setTouchable(true);
-                            //进入退出的动画，指定刚才定义的style
-                            popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
-                            popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
-                            contentView.findViewById(R.id.btn_comment).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    EditText editText = contentView.findViewById(R.id.et_comment);
-                                    Comment comment = new Comment();
-                                    comment.setTwibberId(data.getId());
-                                    comment.setCommenterId(uid);
-                                    comment.setComment(editText.getText().toString());
-                                    comment.save();
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setCommentCount(twibber1.getCommentCount()+1);
-                                    twibber1.save();
-                                    popupWindow.dismiss();
-                                    Toast.makeText(mContext,"评论成功",Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    });
-
-                    holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                            int uid=sp.getInt("id",-1);
-                            if(uid!=-1){
-                                List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
-                                boolean liked=false;
-                                int deleteId=-1;
-                                for (LikeRelation i :
-                                        likes) {
-                                    if(i.getContenterId()==twibber.getId()){
-                                        liked=true;
-                                        deleteId=i.getId();
-                                    }
-                                }
-                                if(liked){
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setLikeCount(twibber1.getLikeCount()-1);
-                                    twibber1.save();
-                                    LitePal.delete(LikeRelation.class,deleteId);
-                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
-                                }else {
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setLikeCount(twibber1.getLikeCount()+1);
-                                    twibber1.save();
-                                    LikeRelation likeRelation = new LikeRelation();
-                                    likeRelation.setTwibberId(uid);
-                                    likeRelation.setContenterId(twibber.getId());
-                                    likeRelation.save();
-                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
-                                }
-                            }
-                        }
-                    });
-                }
-            };
+            Collections.sort(data);
+            adapterFollow = getAdapet(data);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.setAdapter(adapterFollow);
             adapterFollow.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
@@ -328,122 +147,9 @@ public class HomeFragment extends Fragment {
 
             List<Twibber> allTwibber = LitePal.findAll(Twibber.class);
             data.addAll(allTwibber);
+            Collections.sort(data);
 
-
-            adapterLatest = new QuickAdapter<Twibber>(data,mContext) {
-                @Override
-                public int getLayoutId(int viewType) {
-                    return R.layout.twibber_item;
-                }
-
-                @Override
-                public void convert(final VH holder, final Twibber data, int position) {
-                    holder.setText(R.id.nameText, data.getUsername());
-                    holder.setText(R.id.timeText,getThisTime(data.getDate()));
-                    holder.setText(R.id.twibberContent,data.getContent());
-
-                    final Twibber twibber = data;
-
-                    SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                    final int uid=sp.getInt("id",-1);
-                    if(uid!=-1){
-                        List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
-                        for (LikeRelation i :
-                                likes) {
-                            if(i.getContenterId()==data.getId()){
-
-                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
-                            }
-                        }
-                    }
-
-                    holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,AddTwibber.class);
-                            in.putExtra("TransferTwibber",(Serializable) data);
-                            mContext.startActivity(in);
-                            onPause();
-                        }
-                    });
-
-
-                    holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            contentView = LayoutInflater.from(mContext).inflate(
-                                    R.layout.pop_edit_text, null);
-                            popupWindow = new PopupWindow(contentView,
-                                    ViewGroup.LayoutParams.MATCH_PARENT,
-                                    ViewGroup.LayoutParams.WRAP_CONTENT);
-                            popupWindow.setFocusable(true);// 取得焦点
-                            //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
-                            popupWindow.setBackgroundDrawable(new BitmapDrawable());
-                            //点击外部消失
-                            popupWindow.setOutsideTouchable(true);
-                            //设置可以点击
-                            popupWindow.setTouchable(true);
-                            //进入退出的动画，指定刚才定义的style
-                            popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
-                            popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
-                            contentView.findViewById(R.id.btn_comment).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    EditText editText = contentView.findViewById(R.id.et_comment);
-                                    Comment comment = new Comment();
-                                    comment.setTwibberId(data.getId());
-                                    comment.setCommenterId(uid);
-                                    comment.setComment(editText.getText().toString());
-                                    comment.save();
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setCommentCount(twibber1.getCommentCount()+1);
-                                    twibber1.save();
-                                    popupWindow.dismiss();
-                                    Toast.makeText(mContext,"评论成功",Toast.LENGTH_LONG).show();
-                                }
-                            });
-                        }
-                    });
-
-                    holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                            int uid=sp.getInt("id",-1);
-                            if(uid!=-1){
-                                List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
-                                boolean liked=false;
-                                int deleteId=-1;
-                                for (LikeRelation i :
-                                        likes) {
-                                    if(i.getContenterId()==twibber.getId()){
-                                        liked=true;
-                                        deleteId=i.getId();
-                                    }
-                                }
-                                if(liked){
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setLikeCount(twibber1.getLikeCount()-1);
-                                    twibber1.save();
-                                    LitePal.delete(LikeRelation.class,deleteId);
-                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
-                                }else {
-                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
-                                    twibber1.setLikeCount(twibber1.getLikeCount()+1);
-                                    twibber1.save();
-                                    LikeRelation likeRelation = new LikeRelation();
-                                    likeRelation.setTwibberId(uid);
-                                    likeRelation.setContenterId(twibber.getId());
-                                    likeRelation.save();
-                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
-                                }
-                            }
-                        }
-                    });
-
-
-                }
-            };
+            adapterLatest = getAdapet(data);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.setAdapter(adapterLatest);
             adapterLatest.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
@@ -457,7 +163,8 @@ public class HomeFragment extends Fragment {
     private void init(View view){
         vp=(ViewPager)view.findViewById(R.id.view_page_home);
 
-
+        SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+        uid=sp.getInt("id",-1);
 
         ArrayList<View> views = new ArrayList<>();
         hsv = (ViewPagerTitle) view.findViewById(R.id.horizontal_SV);
@@ -514,5 +221,120 @@ public class HomeFragment extends Fragment {
         }
         return t;
     }
+
+    private QuickAdapter<Twibber> getAdapet(List<Twibber> data){
+        QuickAdapter<Twibber> t = new QuickAdapter<Twibber>(data,mContext) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.twibber_item;
+            }
+
+            @Override
+            public void convert(final VH holder, final Twibber data, int position) {
+                holder.setText(R.id.nameText, data.getUsername());
+                holder.setText(R.id.timeText,getThisTime(data.getDate()));
+                holder.setText(R.id.twibberContent,data.getContent());
+
+                final Twibber twibber = data;
+
+                SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                final int uid=sp.getInt("id",-1);
+                if(uid!=-1){
+                    List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                    for (LikeRelation i :
+                            likes) {
+                        if(i.getContenterId()==data.getId()){
+                            holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                        }
+                    }
+                }
+
+                holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent in = new Intent(mContext,AddTwibber.class);
+                        in.putExtra("TransferTwibber",(Serializable) data);
+                        onPause();
+                        mContext.startActivity(in);
+                    }
+                });
+
+                holder.getView(R.id.ib_conmment).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        contentView = LayoutInflater.from(mContext).inflate(
+                                R.layout.pop_edit_text, null);
+                        popupWindow = new PopupWindow(contentView,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.WRAP_CONTENT);
+                        popupWindow.setFocusable(true);// 取得焦点
+                        //注意  要是点击外部空白处弹框消息  那么必须给弹框设置一个背景色  不然是不起作用的
+                        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+                        //点击外部消失
+                        popupWindow.setOutsideTouchable(true);
+                        //设置可以点击
+                        popupWindow.setTouchable(true);
+                        //进入退出的动画，指定刚才定义的style
+                        popupWindow.setAnimationStyle(R.style.mypopwindow_anim_style);
+                        popupWindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+                        contentView.findViewById(R.id.btn_comment).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                EditText editText = contentView.findViewById(R.id.et_comment);
+                                Comment comment = new Comment();
+                                comment.setTwibberId(data.getId());
+                                comment.setCommenterId(uid);
+                                comment.setComment(editText.getText().toString());
+                                comment.save();
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setCommentCount(twibber1.getCommentCount()+1);
+                                twibber1.save();
+                                popupWindow.dismiss();
+                                Toast.makeText(mContext,"评论成功",Toast.LENGTH_LONG).show();
+                            }
+                        });
+                    }
+                });
+
+                holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                        int uid=sp.getInt("id",-1);
+                        if(uid!=-1){
+                            List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                            boolean liked=false;
+                            int deleteId=-1;
+                            for (LikeRelation i :
+                                    likes) {
+                                if(i.getContenterId()==twibber.getId()){
+                                    liked=true;
+                                    deleteId=i.getId();
+                                }
+                            }
+                            if(liked){
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setLikeCount(twibber1.getLikeCount()-1);
+                                twibber1.save();
+                                LitePal.delete(LikeRelation.class,deleteId);
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
+                            }else {
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setLikeCount(twibber1.getLikeCount()+1);
+                                twibber1.save();
+                                LikeRelation likeRelation = new LikeRelation();
+                                likeRelation.setTwibberId(uid);
+                                likeRelation.setContenterId(twibber.getId());
+                                likeRelation.save();
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                            }
+                        }
+                    }
+                });
+            }
+        };
+        return t;
+    }
+
 
 }

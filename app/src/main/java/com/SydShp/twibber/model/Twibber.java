@@ -4,9 +4,10 @@ import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
-public class Twibber extends LitePalSupport  implements Serializable {
+public class Twibber extends LitePalSupport  implements Serializable, Comparable<Twibber> {
 
     private int id;
     private String username;
@@ -19,6 +20,11 @@ public class Twibber extends LitePalSupport  implements Serializable {
 
     //Auto generated getter and setter below
 
+
+    @Override
+    public int compareTo(Twibber o) {
+        return (int)(-this.date.getTime()+o.date.getTime());
+    }
 
     public int getCommentCount() {
         return CommentCount;
