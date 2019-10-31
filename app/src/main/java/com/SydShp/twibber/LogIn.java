@@ -114,7 +114,7 @@ public class LogIn extends AppCompatActivity {
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("username",user.get(0).getName()).apply();
                             editor.putString("lastLogId",user.get(0).getLoginId()).apply();
-                            editor.putString("id",user.get(0).getLoginId()).apply();
+                            editor.putInt("id",user.get(0).getId()).apply();
                             LogIn.this.finish();
                         }else{
                             Toast.makeText(LogIn.this, "密码错误!", Toast.LENGTH_SHORT).show();

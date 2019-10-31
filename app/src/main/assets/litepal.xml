@@ -18,6 +18,8 @@
         <mapping class="com.SydShp.twibber.model.Twibber"/>
         <mapping class="com.SydShp.twibber.model.User"/>
         <mapping class="com.SydShp.twibber.model.UserRelation"/>
+        <mapping class="com.SydShp.twibber.model.Content"/>
+        <mapping class="com.SydShp.twibber.model.LikeRelation"/>
     </list>
 
     <!--

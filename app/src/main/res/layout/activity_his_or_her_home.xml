@@ -75,17 +75,10 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <com.github.mmin18.widget.RealtimeBlurView
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_gravity="bottom"
-        app:realtimeBlurRadius="15dp"
-        app:realtimeOverlayColor="#B0FFFFFF"
-        android:background="@drawable/btn_bg_blue"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_margin="10dp"
         android:layout_gravity="bottom"
         android:id="@+id/follow_H"
         android:background="@drawable/btn_true_blue"

@@ -1,6 +1,7 @@
 package com.SydShp.twibber;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,12 +55,7 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         if (!isHeaderView(position) && !isFooterView(position)) {
             if (haveHeaderView()) position--;
             convert(holder, mDatas.get(position), position);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext,"dianle",Toast.LENGTH_LONG).show();
-                }
-            });
+            final int p = position;
         }
     }
 
@@ -144,7 +140,9 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         return haveFooterView() && position == getItemCount() - 1;
     }
 
-
+    public T getItem(int position){
+        return mDatas.get(position);
+    }
 
     static class VH extends RecyclerView.ViewHolder{
         private SparseArray<View> mViews;

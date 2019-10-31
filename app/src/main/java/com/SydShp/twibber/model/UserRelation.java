@@ -5,8 +5,10 @@ import org.litepal.crud.LitePalSupport;
 public class UserRelation extends LitePalSupport {
 
     private int id;
-    private String userId;
-    private String followId;
+    private int userId;
+
+
+    private int followId;
 
     //Auto generated getter and setter below
     public int getId() {
@@ -17,22 +19,21 @@ public class UserRelation extends LitePalSupport {
         this.id = id;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public String getFollowId() {
+    public int getFollowId() {
         return followId;
     }
 
-    public void setFollowId(String followId) {
+    public void setFollowId(int followId) {
         this.followId = followId;
     }
-
 
 
 }

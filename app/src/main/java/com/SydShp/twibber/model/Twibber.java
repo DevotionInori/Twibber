@@ -3,16 +3,17 @@ package com.SydShp.twibber.model;
 import org.litepal.annotation.Column;
 import org.litepal.crud.LitePalSupport;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Twibber extends LitePalSupport {
+public class Twibber extends LitePalSupport  implements Serializable {
 
     private int id;
     private String username;
     @Column(nullable = true)
     private String content;
     private Date date;
-    private String publisherID;
+    private int publisherID;
     private int likeCount;
     private int transferCount;
 
@@ -41,11 +42,11 @@ public class Twibber extends LitePalSupport {
         this.id = id;
     }
 
-    public String getPublisherID() {
+    public int getPublisherID() {
         return publisherID;
     }
 
-    public void setPublisherID(String publisherID) {
+    public void setPublisherID(int publisherID) {
         this.publisherID = publisherID;
     }
 

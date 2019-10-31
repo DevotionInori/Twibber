@@ -2,9 +2,12 @@ package com.SydShp.twibber;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SearchView;
 
@@ -20,28 +23,36 @@ import com.SydShp.twibber.model.User;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-public class SearchUserActivity extends AppCompatActivity {
+public class SearchUserFragment extends Fragment {
 
     private ArrayList<String> mStrs = new ArrayList<String>();
     private Map<Integer,String> userMap = new HashMap<Integer, String>();
     private SearchView mSearchView;
     private ListView mListView;
+    private Context mContext;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_user);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext=context;
+    }
 
-        mSearchView = (SearchView) findViewById(R.id.userSearchView);
-        mListView = (ListView) findViewById(R.id.userListView);
-        mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrs));
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view=inflater.inflate(R.layout.fragment_search_user,container,false);
+        mSearchView = (SearchView) view.findViewById(R.id.userSearchView);
+        mListView = (ListView) view.findViewById(R.id.userListView);
+        mListView.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, mStrs));
         mListView.setTextFilterEnabled(true);
+
+
+
 
         // 设置搜索文本监听
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -51,7 +62,7 @@ public class SearchUserActivity extends AppCompatActivity {
                 changeMstr(query);
                 List<User> queryUserList = LitePal.where("name like ?",query).find(User.class);
                 if (queryUserList.isEmpty()){
-                    Toast.makeText(SearchUserActivity.this, "未找到该用户", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "未找到该用户", Toast.LENGTH_SHORT).show();
                 }else {
                     int idFound = queryUserList.get(0).getId();
 
@@ -74,16 +85,21 @@ public class SearchUserActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        return  view;
     }
+
 
     void changeMstr(String likeString){
         List<User> UserList = LitePal.where("name like ?","%"+likeString+"%").find(User.class);
+        mStrs.clear();
         for (int i=0;i<UserList.size();i++){
             mStrs.add(UserList.get(i).getName());
-            mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrs));
+            mListView.setAdapter(new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, mStrs));
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(mContext, mStrs.get(position), Toast.LENGTH_SHORT).show();
                     mSearchView.setQueryHint(mStrs.get(position));
                 }
             });

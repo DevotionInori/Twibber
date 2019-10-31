@@ -109,8 +109,8 @@ public class MyPageFragment extends Fragment {
 
         data=new ArrayList<Twibber>();
         List<Twibber> mTwibber;
-        if(sp.getString("id",null)!=null){
-            mTwibber = LitePal.where("publisherID = ?", sp.getString("id",null)).find(Twibber.class);
+        if(sp.getInt("id",-1)!=-1){
+            mTwibber = LitePal.where("publisherID = ?", ""+sp.getInt("id",0)).find(Twibber.class);
             data.addAll(mTwibber);
         }
 
@@ -123,9 +123,9 @@ public class MyPageFragment extends Fragment {
 
             @Override
             public void convert(VH holder, Twibber data, int position) {
-                holder.setText(R.id.nameText, data.getUsername());
-                holder.setText(R.id.timeText,getThisTime(data.getDate()));
-                holder.setText(R.id.twibberContent,data.getContent());
+                holder.setText(R.id.nameText_twibber, data.getUsername());
+                holder.setText(R.id.timeText_twibber,getThisTime(data.getDate()));
+                holder.setText(R.id.twibberContent_twibber,data.getContent());
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

@@ -46,6 +46,7 @@
         android:layout_height="wrap_content"
         android:text="内容"
         android:layout_marginTop="10dp"
+        android:background="@drawable/bg_change"
         app:layout_constraintTop_toBottomOf="@id/icAvatar"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

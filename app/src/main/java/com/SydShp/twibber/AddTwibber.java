@@ -45,7 +45,7 @@ public class AddTwibber extends AppCompatActivity {
                 Twibber tTwibber = new Twibber();
                 tTwibber.setUsername(sp.getString("username",null));
                 tTwibber.setContent(inputEditText.getText().toString());
-                tTwibber.setPublisherID(sp.getString("id",null));
+                tTwibber.setPublisherID(sp.getInt("id",0));
                 tTwibber.setDate(new Date());
                 tTwibber.setLikeCount(0);
                 tTwibber.setTransferCount(0);

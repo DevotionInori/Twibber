@@ -4,8 +4,126 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".TwibberPage">
 
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/twibber_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:gravity="bottom"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/twibber_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            app:navigationIcon="@drawable/ic_action_back"
+            android:layout_gravity="bottom">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="推博正文"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cl_twibber"
+        app:layout_constraintTop_toBottomOf="@+id/twibber_appbar">
+
+        <com.SydShp.twibber.NiceImageView
+            android:id="@+id/icAvatar_twibber"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_me"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            app:is_circle="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/nameText_twibber"
+            android:layout_width="200dp"
+            android:layout_height="20dp"
+            android:text="昵称"
+            android:textSize="15dp"
+            android:gravity="left|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/icAvatar_twibber"/>
+
+        <TextView
+            android:id="@+id/timeText_twibber"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:textSize="10dp"
+            android:gravity="left|center"
+            android:text="时间"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@id/nameText_twibber"
+            app:layout_constraintLeft_toRightOf="@id/icAvatar_twibber"/>
+
+        <TextView
+            android:id="@+id/twibberContent_twibber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="内容"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/icAvatar_twibber"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/twibber_recycler"
+        app:layout_constraintTop_toBottomOf="@+id/cl_twibber"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#00000000"
+        android:layout_gravity="bottom"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/ic_action_trans"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/ic_action_comment"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:src="@drawable/ic_action_like"/>
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

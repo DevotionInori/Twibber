@@ -1,11 +1,14 @@
 package com.SydShp.twibber;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import com.SydShp.twibber.model.UserRelation;
 
 import org.litepal.LitePal;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,15 +62,15 @@ public class HomeFragment extends Fragment {
                 logInTip1.setVisibility(View.VISIBLE);
 
             }
-            if(sp.getString("id",null)!=null){
-                List<UserRelation> follow = LitePal.where("userId = ?",sp.getString("id",null)).find(UserRelation.class);
+            if(sp.getInt("id",0)!=0){
+                List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
                 for (UserRelation i :
                         follow) {
-                    List<Twibber> fTwibber = LitePal.where("publisherId=?",i.getFollowId()).find(Twibber.class);
+                    List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
                     data.addAll(fTwibber);
                 }
 
-                List<Twibber> mTwibber = LitePal.where("publisherId=?",sp.getString("id",null)).find(Twibber.class);
+                List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
                 data.addAll(mTwibber);
             }
         }
@@ -102,15 +106,16 @@ public class HomeFragment extends Fragment {
             else
                 logInTip1.setVisibility(View.VISIBLE);
 
-            if(sp.getString("id",null)!=null){
-                List<UserRelation> follow = LitePal.where("userId = ?",sp.getString("id",null)).find(UserRelation.class);
+
+            if(sp.getInt("id",-1)!=-1){
+                List<UserRelation> follow = LitePal.where("userId = ?",""+sp.getInt("id",0)).find(UserRelation.class);
                 for (UserRelation i :
                         follow) {
-                    List<Twibber> fTwibber = LitePal.where("publisherId=?",i.getFollowId()).find(Twibber.class);
+                    List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
                     data.addAll(fTwibber);
                 }
 
-                List<Twibber> mTwibber = LitePal.where("publisherId=?",sp.getString("id",null)).find(Twibber.class);
+                List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
                 data.addAll(mTwibber);
             }
 
@@ -126,6 +131,41 @@ public class HomeFragment extends Fragment {
                     holder.setText(R.id.nameText, data.getUsername());
                     holder.setText(R.id.timeText,getThisTime(data.getDate()));
                     holder.setText(R.id.twibberContent,data.getContent());
+
+                    final int p = position;
+
+                    holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,HisOrHerHome.class);
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.getView(R.id.nameText).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,HisOrHerHome.class);
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.getView(R.id.twibberContent).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,TwibberPage.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
+                    holder.itemView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent in = new Intent(mContext,TwibberPage.class);
+                            in.putExtra("twibber",(Serializable)getItem(p));
+                            mContext.startActivity(in);
+                        }
+                    });
+
+
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -133,6 +173,7 @@ public class HomeFragment extends Fragment {
             adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
             adapter.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
             recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+
         } else {
             recyclerView = view.findViewById(R.id.recycle_home);
             logInTip2=view.findViewById(R.id.home_log_tip);
@@ -163,6 +204,7 @@ public class HomeFragment extends Fragment {
             adapter.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
             recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         }
+
     }
 
 
