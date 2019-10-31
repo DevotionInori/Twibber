@@ -41,7 +41,8 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private List<Twibber> data;
+    private List<Twibber> data1;
+    private List<Twibber> data2;
     private Context mContext;
     private ViewPager vp;
     private ViewPagerTitle hsv;
@@ -62,25 +63,28 @@ public class HomeFragment extends Fragment {
         mContext=context;
     }
 
+
+
     @Override
     public void onResume() {
         if(logInTip1!=null){
-            data.clear();
+            data1.clear();
+            data2.clear();
             List<UserRelation> follow = LitePal.where("userId = ?",""+uid).find(UserRelation.class);
             for (UserRelation i :
                     follow) {
                 List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
-                data.addAll(fTwibber);
+                data1.addAll(fTwibber);
             }
 
             List<Twibber> mTwibber = LitePal.where("publisherId=?",""+uid).find(Twibber.class);
-            data.addAll(mTwibber);
-            Collections.sort(data);
+            data1.addAll(mTwibber);
+            Collections.sort(data1);
             adapterFollow.notifyDataSetChanged();
-            adapterFollow=getAdapet(data);
-            data=LitePal.findAll(Twibber.class);
-            Collections.sort(data);
-            adapterLatest=getAdapet(data);
+            data2=LitePal.findAll(Twibber.class);
+            Collections.sort(data2);
+            adapterLatest.notifyDataSetChanged();
+
         }
         super.onResume();
     }
@@ -89,8 +93,6 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view=inflater.inflate(R.layout.fragment_home_page,container,false);
-
-
 
         init(view);
         return  view;
@@ -103,7 +105,7 @@ public class HomeFragment extends Fragment {
 
             logInTip1=view.findViewById(R.id.home_log_tip);
 
-            data=new ArrayList<Twibber>();
+            data1=new ArrayList<Twibber>();
 
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
             if(sp.getString("username",null)!=null){
@@ -123,15 +125,15 @@ public class HomeFragment extends Fragment {
                 for (UserRelation i :
                         follow) {
                     List<Twibber> fTwibber = LitePal.where("publisherId=?",""+i.getFollowId()).find(Twibber.class);
-                    data.addAll(fTwibber);
+                    data1.addAll(fTwibber);
                 }
 
                 List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
-                data.addAll(mTwibber);
+                data1.addAll(mTwibber);
             }
 
-            Collections.sort(data);
-            adapterFollow = getAdapet(data);
+            Collections.sort(data1);
+            adapterFollow = getAdapet(data1);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.setAdapter(adapterFollow);
             adapterFollow.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
@@ -143,13 +145,13 @@ public class HomeFragment extends Fragment {
             logInTip2=view.findViewById(R.id.home_log_tip);
             logInTip2.setVisibility(View.GONE);
 
-            data=new ArrayList<Twibber>();
+            data2=new ArrayList<Twibber>();
 
             List<Twibber> allTwibber = LitePal.findAll(Twibber.class);
-            data.addAll(allTwibber);
-            Collections.sort(data);
+            data2.addAll(allTwibber);
 
-            adapterLatest = getAdapet(data);
+            Collections.sort(data2);
+            adapterLatest = getAdapet(data2);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.setAdapter(adapterLatest);
             adapterLatest.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
