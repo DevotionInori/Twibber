@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_change">
+    android:background="@drawable/bg_change_white">
 
     <com.SydShp.twibber.NiceImageView
         android:id="@+id/icAvatar"
@@ -19,13 +19,14 @@
 
     <TextView
         android:id="@+id/nameText"
-        android:layout_width="200dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:text="昵称"
         android:textSize="15dp"
         android:gravity="left|center"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/bg_change"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toRightOf="@id/icAvatar"/>
 

@@ -42,12 +42,15 @@ public class HomeFragment extends Fragment {
     private DynamicLine dynamicLine;
     private TextView logInTip1;
     private TextView logInTip2;
+    private QuickAdapter adapterFollow;
+    private QuickAdapter adapterLatest;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext=context;
     }
+
 
 
     @Override
@@ -73,8 +76,9 @@ public class HomeFragment extends Fragment {
                 List<Twibber> mTwibber = LitePal.where("publisherId=?",""+sp.getInt("id",0)).find(Twibber.class);
                 data.addAll(mTwibber);
             }
+            adapterFollow.setmDatas(data);
+            adapterLatest.setmDatas(LitePal.findAll(Twibber.class));
         }
-
         super.onResume();
     }
 
@@ -120,7 +124,7 @@ public class HomeFragment extends Fragment {
             }
 
 
-            QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
+            adapterFollow = new QuickAdapter<Twibber>(data,mContext) {
                 @Override
                 public int getLayoutId(int viewType) {
                     return R.layout.twibber_item;
@@ -169,9 +173,9 @@ public class HomeFragment extends Fragment {
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            recyclerView.setAdapter(adapter);
-            adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
-            adapter.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
+            recyclerView.setAdapter(adapterFollow);
+            adapterFollow.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
+            adapterFollow.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
             recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
 
         } else {
@@ -185,7 +189,7 @@ public class HomeFragment extends Fragment {
             data.addAll(allTwibber);
 
 
-            QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
+            adapterLatest = new QuickAdapter<Twibber>(data,mContext) {
                 @Override
                 public int getLayoutId(int viewType) {
                     return R.layout.twibber_item;
@@ -199,9 +203,9 @@ public class HomeFragment extends Fragment {
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-            recyclerView.setAdapter(adapter);
-            adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
-            adapter.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
+            recyclerView.setAdapter(adapterLatest);
+            adapterLatest.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
+            adapterLatest.addHeaderView(LayoutInflater.from(mContext).inflate(R.layout.item_head,null));
             recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         }
 
@@ -235,7 +239,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public String getThisTime(Date date) {
+    public static String getThisTime(Date date) {
 
         Date dateNow = new Date();
         long delta = dateNow.getTime() - date.getTime();

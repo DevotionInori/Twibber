@@ -59,6 +59,11 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         }
     }
 
+    public void setmDatas(List<T> datas){
+        this.mDatas=datas;
+    }
+
+
     @Override
     public int getItemCount() {
         int count = (mDatas == null ? 0 : mDatas.size());
