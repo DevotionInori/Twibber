@@ -6,8 +6,6 @@ public class UserRelation extends LitePalSupport {
 
     private int id;
     private int userId;
-
-
     private int followId;
 
     //Auto generated getter and setter below
