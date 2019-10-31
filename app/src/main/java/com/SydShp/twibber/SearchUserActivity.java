@@ -18,6 +18,7 @@ import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -25,7 +26,7 @@ import java.util.Set;
 public class SearchUserActivity extends AppCompatActivity {
 
     private ArrayList<String> mStrs = new ArrayList<String>();
-    private Map<Integer,String> userMap;
+    private Map<Integer,String> userMap = new HashMap<Integer, String>();
     private SearchView mSearchView;
     private ListView mListView;
 
@@ -50,7 +51,7 @@ public class SearchUserActivity extends AppCompatActivity {
                     Toast.makeText(SearchUserActivity.this, "未找到该用户", Toast.LENGTH_SHORT).show();
                 }else {
                     int idFound = queryUserList.get(0).getId();
-                    Toast.makeText(SearchUserActivity.this, idFound, Toast.LENGTH_SHORT).show();
+
                 }
                 return false;
             }
@@ -60,8 +61,8 @@ public class SearchUserActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText)){
                     mListView.setFilterText(newText);
-                    mStrs.clear();
-                    userMap.clear();
+                    //mStrs.clear();
+                    //userMap.clear();
                     changeMstr(newText);
 
                 }else{
@@ -70,13 +71,13 @@ public class SearchUserActivity extends AppCompatActivity {
                 return false;
             }
         });
-
     }
 
     void changeMstr(String likeString){
-        List<User> UserList = LitePal.where("name like %?%",likeString).find(User.class);
+        List<User> UserList = LitePal.where("name like ?","%"+likeString+"%").find(User.class);
         for (int i=0;i<UserList.size();i++){
             mStrs.add(UserList.get(i).getName());
+            mListView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrs));
             userMap.put(UserList.get(i).getId(),UserList.get(i).getName());
         }
     }
