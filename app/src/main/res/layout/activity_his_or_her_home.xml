@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HisOrHerHome">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/HisHerAppbar"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/HCollapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            app:collapsedTitleGravity="center"
+            app:expandedTitleGravity="bottom|center"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:expandedTitleTextAppearance="@style/toolbarTitle"
+            app:collapsedTitleTextAppearance="@style/toolbarTitle"
+            app:expandedTitleMarginBottom="50dp"
+            android:minHeight="50dp"
+            app:contentScrim="@color/colorPrimaryDark"
+            android:fitsSystemWindows="true">
+
+            <ImageView
+                android:id="@+id/Hiv"
+                android:layout_width="match_parent"
+                android:layout_height="240dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/my_background"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.9"
+                android:fitsSystemWindows="true"/>
+
+            <com.SydShp.twibber.NiceImageView
+                android:id="@+id/HH_head"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_me"
+                app:border_width="1dp"
+                app:border_color="@color/colorPrimaryDark"
+                app:is_circle="true"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/HHToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_collapseMode="pin"
+                android:gravity="center"
+                app:titleTextColor="#FFFFFF"
+                app:title="标题"
+                android:fitsSystemWindows="true"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_HH"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_change">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.github.mmin18.widget.RealtimeBlurView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        app:realtimeBlurRadius="15dp"
+        app:realtimeOverlayColor="#B0FFFFFF"
+        android:background="@drawable/btn_bg_blue"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_gravity="bottom"
+        android:id="@+id/follow_H"
+        android:background="@drawable/btn_true_blue"
+        android:text="关注"/>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

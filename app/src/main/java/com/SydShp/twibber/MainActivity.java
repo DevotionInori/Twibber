@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
                 btHome.setCompoundDrawables(null,icHome_unselected,null,null);
                 btMe.setCompoundDrawables(null,icMe_unselected,null,null);
                 btSearch.setCompoundDrawables(null,icSearch_select,null,null);
+                Intent in = new Intent(MainActivity.this,SearchUserActivity.class);
+                startActivity(in);
 
             }
         });

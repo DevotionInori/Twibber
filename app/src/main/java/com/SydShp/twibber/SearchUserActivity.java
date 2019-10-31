@@ -1,7 +1,9 @@
 package com.SydShp.twibber;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import android.widget.SearchView;
 
 import android.text.TextUtils;
 import android.widget.ListView;
@@ -15,12 +17,14 @@ import com.SydShp.twibber.model.User;
 import org.litepal.LitePal;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class SearchUserActivity extends AppCompatActivity {
 
-    private ArrayList<String> mStrs;
+    private ArrayList<String> mStrs = new ArrayList<String>();
     private Map<Integer,String> userMap;
     private SearchView mSearchView;
     private ListView mListView;

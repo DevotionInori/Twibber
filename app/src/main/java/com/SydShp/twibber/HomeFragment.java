@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.SydShp.twibber.model.Twibber;
+import com.SydShp.twibber.model.UserRelation;
 
 import org.litepal.LitePal;
 
@@ -50,11 +51,26 @@ public class HomeFragment extends Fragment {
         if(logInTip1!=null){
 
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-            if(sp.getString("username",null)!=null)
+            if(sp.getString("username",null)!=null){
                 logInTip1.setVisibility(View.GONE);
-            else
+            }
+            else{
                 logInTip1.setVisibility(View.VISIBLE);
+
+            }
+            if(sp.getString("id",null)!=null){
+                List<UserRelation> follow = LitePal.where("userId = ?",sp.getString("id",null)).find(UserRelation.class);
+                for (UserRelation i :
+                        follow) {
+                    List<Twibber> fTwibber = LitePal.where("publisherId=?",i.getFollowId()).find(Twibber.class);
+                    data.addAll(fTwibber);
+                }
+
+                List<Twibber> mTwibber = LitePal.where("publisherId=?",sp.getString("id",null)).find(Twibber.class);
+                data.addAll(mTwibber);
+            }
         }
+
         super.onResume();
     }
 
@@ -76,18 +92,28 @@ public class HomeFragment extends Fragment {
 
             logInTip1=view.findViewById(R.id.home_log_tip);
 
+            data=new ArrayList<Twibber>();
+
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-            if(sp.getString("username",null)!=null)
+            if(sp.getString("username",null)!=null){
+
                 logInTip1.setVisibility(View.GONE);
+            }
             else
                 logInTip1.setVisibility(View.VISIBLE);
 
+            if(sp.getString("id",null)!=null){
+                List<UserRelation> follow = LitePal.where("userId = ?",sp.getString("id",null)).find(UserRelation.class);
+                for (UserRelation i :
+                        follow) {
+                    List<Twibber> fTwibber = LitePal.where("publisherId=?",i.getFollowId()).find(Twibber.class);
+                    data.addAll(fTwibber);
+                }
 
-            data=new ArrayList<Twibber>();
+                List<Twibber> mTwibber = LitePal.where("publisherId=?",sp.getString("id",null)).find(Twibber.class);
+                data.addAll(mTwibber);
+            }
 
-            data=new ArrayList<Twibber>();
-            List<Twibber> allTwibber = LitePal.findAll(Twibber.class);
-            data.addAll(allTwibber);
 
             QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
                 @Override
@@ -113,6 +139,7 @@ public class HomeFragment extends Fragment {
             logInTip2.setVisibility(View.GONE);
 
             data=new ArrayList<Twibber>();
+
             List<Twibber> allTwibber = LitePal.findAll(Twibber.class);
             data.addAll(allTwibber);
 
