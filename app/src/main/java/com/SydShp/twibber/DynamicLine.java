@@ -53,7 +53,7 @@ public class DynamicLine extends View {
 //        paint.setColor(getResources().getColor(R.color.colorAccent));
         paint.setStyle(Paint.Style.FILL);
         paint.setStrokeWidth(5);
-        paint.setShader(new LinearGradient(0, 100, getScreenWidth((Activity) getContext()), 100, Color.parseColor("#ffc125"), Color.parseColor("#ff4500"), Shader.TileMode.MIRROR));
+        paint.setShader(new LinearGradient(0, 100, getScreenWidth((Activity) getContext()), 100, Color.parseColor("#FFFFFF"), Color.parseColor("#FFFFFF"), Shader.TileMode.MIRROR));
 
         scroller = new Scroller(getContext());
     }

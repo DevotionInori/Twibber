@@ -1,11 +1,13 @@
 package com.SydShp.twibber;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,12 +35,27 @@ public class HomeFragment extends Fragment {
     private LinearLayout container;
     private String[] menus = { "关注","最新推博" };
     private DynamicLine dynamicLine;
-
+    private TextView logInTip1;
+    private TextView logInTip2;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext=context;
+    }
+
+
+    @Override
+    public void onResume() {
+        if(logInTip1!=null){
+
+            SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+            if(sp.getString("username",null)!=null)
+                logInTip1.setVisibility(View.GONE);
+            else
+                logInTip1.setVisibility(View.VISIBLE);
+        }
+        super.onResume();
     }
 
     @Nullable
@@ -56,6 +73,16 @@ public class HomeFragment extends Fragment {
     public void initRecyclerView(View view, int position) {
         if (position % 2 == 0) {
             recyclerView = view.findViewById(R.id.recycle_home);
+
+            logInTip1=view.findViewById(R.id.home_log_tip);
+
+            SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+            if(sp.getString("username",null)!=null)
+                logInTip1.setVisibility(View.GONE);
+            else
+                logInTip1.setVisibility(View.VISIBLE);
+
+
             data=new ArrayList<Twibber>();
 
             data=new ArrayList<Twibber>();
@@ -82,6 +109,8 @@ public class HomeFragment extends Fragment {
             recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
         } else {
             recyclerView = view.findViewById(R.id.recycle_home);
+            logInTip2=view.findViewById(R.id.home_log_tip);
+            logInTip2.setVisibility(View.GONE);
 
             data=new ArrayList<Twibber>();
             List<Twibber> allTwibber = LitePal.findAll(Twibber.class);
@@ -112,6 +141,9 @@ public class HomeFragment extends Fragment {
 
     private void init(View view){
         vp=(ViewPager)view.findViewById(R.id.view_page_home);
+
+
+
         ArrayList<View> views = new ArrayList<>();
         hsv = (ViewPagerTitle) view.findViewById(R.id.horizontal_SV);
         hsv.initData(new String[]{"关注", "最新推博"}, vp, 0);
@@ -121,9 +153,6 @@ public class HomeFragment extends Fragment {
         views.add(inflater.inflate(R.layout.recycler_view, null));
         views.add(inflater.inflate(R.layout.recycler_view, null));
 
-
-
-
         MyPagerAdapter adapter = new MyPagerAdapter(views){
             @Override
             public Object instantiateItem(ViewGroup container, int position) {
@@ -132,6 +161,7 @@ public class HomeFragment extends Fragment {
             }
         };
         vp.setAdapter(adapter);
+
 
     }
 

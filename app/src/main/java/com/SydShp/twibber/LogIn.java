@@ -93,6 +93,10 @@ public class LogIn extends AppCompatActivity {
             btnLogIn=view.findViewById(R.id.btn_log_in);
             idLogIn=view.findViewById(R.id.log_in_uesrid);
             pwdLogIn=view.findViewById(R.id.log_in_password);
+
+            SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+            idLogIn.setText(sp.getString("lastLogId",null));
+
             btnLogIn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,6 +113,7 @@ public class LogIn extends AppCompatActivity {
                             SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("username",user.get(0).getName()).apply();
+                            editor.putString("lastLogId",user.get(0).getLoginId()).apply();
                             editor.putString("id",user.get(0).getLoginId()).apply();
                             LogIn.this.finish();
                         }else{

@@ -84,7 +84,8 @@ public class MyPageFragment extends Fragment {
             public void onClick(View v) {
                 if(login.getText()=="登出"){
                     SharedPreferences sp = mContext.getSharedPreferences("login",mContext.MODE_PRIVATE);
-                    sp.edit().clear().apply();
+                    sp.edit().remove("id").apply();
+                    sp.edit().remove("username").apply();
                 }
                 Intent in = new Intent(mContext,LogIn.class);
                 startActivity(in);
