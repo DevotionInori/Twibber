@@ -9,6 +9,12 @@ import android.widget.ArrayAdapter;
 
 import android.os.Bundle;
 
+import com.SydShp.twibber.model.User;
+
+import org.litepal.LitePal;
+
+import java.util.List;
+
 public class SearchUserActivity extends AppCompatActivity {
 
     private String[] mStrs = {"aaa", "bbb", "ccc", "test"};
@@ -38,6 +44,7 @@ public class SearchUserActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 if (!TextUtils.isEmpty(newText)){
                     mListView.setFilterText(newText);
+                    changeMstr(newText);
                 }else{
                     mListView.clearTextFilter();
                 }
@@ -45,5 +52,13 @@ public class SearchUserActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    void changeMstr(String likeString){
+        List<User> UserList = LitePal.where("name like %?%",likeString).find(User.class);
+        String[] newMStr;
+        for (int i=0;i<UserList.size();i++){
+
+        }
     }
 }
