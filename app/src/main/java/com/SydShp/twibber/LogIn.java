@@ -5,6 +5,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -43,7 +45,6 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        LitePal.initialize(this);
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -70,13 +71,12 @@ public class LogIn extends AppCompatActivity {
         hsv = (ViewPagerTitle)findViewById(R.id.log_vpTitle);
         hsv.initData(new String[]{"登录", "注册"}, vp, 0);
 
+        SQLiteDatabase db = LitePal.getDatabase();
+
         LayoutInflater inflater = getLayoutInflater();
         views = new ArrayList<>();
         views.add(inflater.inflate(R.layout.page_log_in, null));
         views.add(inflater.inflate(R.layout.page_register, null));
-
-
-
 
         MyPagerAdapter adapter = new MyPagerAdapter(views){
             @Override
@@ -89,7 +89,7 @@ public class LogIn extends AppCompatActivity {
     }
 
     public void initPage(View view, int position) {
-        if (position % 2 == 0) {
+        if (position == 0) {
             btnLogIn=view.findViewById(R.id.btn_log_in);
             idLogIn=view.findViewById(R.id.log_in_uesrid);
             pwdLogIn=view.findViewById(R.id.log_in_password);
@@ -101,13 +101,17 @@ public class LogIn extends AppCompatActivity {
                     }else if (TextUtils.isEmpty(pwdLogIn.getText())){
                         Toast.makeText(LogIn.this, "请输入密码", Toast.LENGTH_SHORT).show();
                     }else {
-                        List<User> tryUser = LitePal.where("loginId = ?",idLogIn.getText().toString()).find(User.class);
-                        if (tryUser.isEmpty()) {
+                        List<User> user = LitePal.where("loginId = ?", idLogIn.getText().toString()).find(User.class);
+                        if (user.isEmpty()) {
                             Toast.makeText(LogIn.this, "用户不存在！", Toast.LENGTH_SHORT).show();
-                        }
-                        if (tryUser.get(0).getPassWd() == pwdLogIn.getText().toString()){
+                        }else if (user.get(0).getPassWd().equals(pwdLogIn.getText().toString())){
                             //todo:宋亚东来写登录功能
-                            Toast.makeText(LogIn.this, "success", Toast.LENGTH_SHORT).show();
+                            SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sp.edit();
+                            editor.putString("username",user.get(0).getName()).apply();
+                            LogIn.this.finish();
+                        }else{
+                            Toast.makeText(LogIn.this, "密码错误!", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -121,12 +125,6 @@ public class LogIn extends AppCompatActivity {
             btnRegister.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //user user=new user();
-                    //user.setLoginId(idRegister.getText().toString());
-                    //user.setPassWd(pwdRegister.getText().toString());
-                    //user.setName(nameRegister.getText().toString());
-                    //user.save();
-//                    Snackbar.make(v,"注册成功!",Snackbar.LENGTH_LONG).show();
                     if (TextUtils.isEmpty(idRegister.getText())) {
                         Toast.makeText(LogIn.this, "请输入用户名", Toast.LENGTH_SHORT).show();
                     }else if (TextUtils.isEmpty(pwdRegister.getText())){
@@ -134,11 +132,10 @@ public class LogIn extends AppCompatActivity {
                     }else if (TextUtils.isEmpty(nameRegister.getText())){
                         Toast.makeText(LogIn.this, "请输入昵称", Toast.LENGTH_SHORT).show();
                     }else {
-                        List<User> tryUser = LitePal.where("loginId = ?",idLogIn.getText().toString()).find(User.class);
+                        List<User> tryUser = LitePal.where("loginId = ? ",idRegister.getText().toString()).find(User.class);
                         //Toast.makeText(LogIn.this, tryUser.size(), Toast.LENGTH_SHORT).show();
-                        //todo:nmd wsm
                         if (!tryUser.isEmpty()) {
-                            Toast.makeText(LogIn.this, tryUser.get(0).getPassWd(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogIn.this,"用户名已存在!",Toast.LENGTH_LONG).show();
                         }else {
                             User regUser = new User();
                             regUser.setLoginId(idRegister.getText().toString());
@@ -148,11 +145,7 @@ public class LogIn extends AppCompatActivity {
 
                             pwdRegister.setText("");
                             nameRegister.setText("");
-//                            try {
-//
-//                            }catch (Exception e){
-//                                Toast.makeText(LogIn.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
-//                            }
+                            Toast.makeText(LogIn.this,"注册成功!",Toast.LENGTH_LONG).show();
                         }
                     }
                 }

@@ -17,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +30,29 @@ public class MyPageFragment extends Fragment {
     private Button login;
     private TextView tip;
     private Toolbar toolbar;
+    private CollapsingToolbarLayout  collapsingToolbarLayout;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext=context;
+    }
+
+    @Override
+    public void onResume() {
+        SharedPreferences sp = mContext.getSharedPreferences("login",mContext.MODE_PRIVATE);
+        if(sp.getString("username",null)!=null){
+            collapsingToolbarLayout.setTitle(sp.getString("username",null));
+            tip.setVisibility(View.GONE);
+            login.setText("登出");
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+        else{
+            collapsingToolbarLayout.setTitle("请先登录");
+            tip.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            login.setText("登录");
+        }
+        super.onResume();
     }
 
     @Nullable
@@ -50,10 +71,16 @@ public class MyPageFragment extends Fragment {
         login=view.findViewById(R.id.log_in);
         tip=view.findViewById(R.id.empty_rep_text);
         toolbar=view.findViewById(R.id.toolbar);
+        collapsingToolbarLayout=view.findViewById(R.id.mCollapsingToolbarLayout);
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(login.getText()=="登出"){
+                    SharedPreferences sp = mContext.getSharedPreferences("login",mContext.MODE_PRIVATE);
+                    sp.edit().clear().apply();
+                }
                 Intent in = new Intent(mContext,LogIn.class);
                 startActivity(in);
             }
@@ -63,13 +90,16 @@ public class MyPageFragment extends Fragment {
         if(sp.getString("username",null)!=null){
             toolbar.setTitle(sp.getString("username",null));
             tip.setVisibility(View.GONE);
-            login.setVisibility(View.GONE);
+            login.setText("登出");
+            recyclerView.setVisibility(View.VISIBLE);
         }
         else{
             toolbar.setTitle("请先登录");
             tip.setVisibility(View.VISIBLE);
             recyclerView.setVisibility(View.GONE);
+            login.setText("登录");
         }
+
         data=new ArrayList<Twibber>();
         data.add(new Twibber("Devotion","hhhhhhhhhhhhhhhhhhhhh"));
         data.add(new Twibber("Devotion","哈哈哈哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
