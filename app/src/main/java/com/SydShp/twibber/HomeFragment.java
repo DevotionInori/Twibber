@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         if(logInTip1!=null){
-
+            data.clear();
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
             if(sp.getString("username",null)!=null){
                 logInTip1.setVisibility(View.GONE);

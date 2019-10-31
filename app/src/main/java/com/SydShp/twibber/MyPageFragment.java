@@ -123,9 +123,9 @@ public class MyPageFragment extends Fragment {
 
             @Override
             public void convert(VH holder, Twibber data, int position) {
-                holder.setText(R.id.nameText_twibber, data.getUsername());
-                holder.setText(R.id.timeText_twibber,getThisTime(data.getDate()));
-                holder.setText(R.id.twibberContent_twibber,data.getContent());
+                holder.setText(R.id.nameText, data.getUsername());
+                holder.setText(R.id.timeText,getThisTime(data.getDate()));
+                holder.setText(R.id.twibberContent,data.getContent());
             }
         };
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
