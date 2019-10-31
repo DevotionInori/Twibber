@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +17,14 @@ import android.widget.ListView;
 import android.widget.ArrayAdapter;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.SydShp.twibber.model.User;
 
 import org.litepal.LitePal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +68,9 @@ public class SearchUserFragment extends Fragment {
                     Toast.makeText(mContext, "未找到该用户", Toast.LENGTH_SHORT).show();
                 }else {
                     int idFound = queryUserList.get(0).getId();
+                    Intent in = new Intent(mContext,HisOrHerHome.class);
+                    in.putExtra("User",(Serializable)queryUserList.get(0));
+                    mContext.startActivity(in);
 
                 }
                 return false;
@@ -101,6 +107,9 @@ public class SearchUserFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Toast.makeText(mContext, mStrs.get(position), Toast.LENGTH_SHORT).show();
                     mSearchView.setQueryHint(mStrs.get(position));
+                    int Tid = mSearchView.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+                    TextView textView = (TextView)mSearchView.findViewById(Tid);
+                    textView.setText(mStrs.get(position));
                 }
             });
             userMap.put(UserList.get(i).getId(),UserList.get(i).getName());

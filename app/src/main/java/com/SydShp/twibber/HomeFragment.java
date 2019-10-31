@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.SydShp.twibber.model.Twibber;
+import com.SydShp.twibber.model.User;
 import com.SydShp.twibber.model.UserRelation;
 
 import org.litepal.LitePal;
@@ -142,40 +143,6 @@ public class HomeFragment extends Fragment {
                     holder.setText(R.id.timeText,getThisTime(data.getDate()));
                     holder.setText(R.id.twibberContent,data.getContent());
 
-                    final int p = position;
-
-                    holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,HisOrHerHome.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
-                    holder.getView(R.id.nameText).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,HisOrHerHome.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
-                    holder.getView(R.id.twibberContent).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,TwibberPage.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,TwibberPage.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
 
 
                 }

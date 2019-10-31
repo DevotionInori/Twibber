@@ -103,8 +103,7 @@ public class HisOrHerHome extends AppCompatActivity {
         followCount=findViewById(R.id.hh_follows);
 
 
-        twibber=(Twibber)getIntent().getSerializableExtra("twibber");
-        user= LitePal.find(User.class,twibber.getPublisherID());
+        user=(User)getIntent().getSerializableExtra("User");
 
         fansCount.setText("粉丝:"+user.getFans_count());
         followCount.setText("关注:"+user.getFollow_count());

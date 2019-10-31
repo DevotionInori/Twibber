@@ -11,6 +11,11 @@ import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SydShp.twibber.model.Twibber;
+import com.SydShp.twibber.model.User;
+
+import org.litepal.LitePal;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -56,6 +61,42 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
             if (haveHeaderView()) position--;
             convert(holder, mDatas.get(position), position);
             final int p = position;
+
+
+            holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(mContext,HisOrHerHome.class);
+                    Twibber tb = (Twibber) getItem(p);
+                    in.putExtra("User",(Serializable) LitePal.find(User.class,tb.getPublisherID()));
+                    mContext.startActivity(in);
+                }
+            });
+            holder.getView(R.id.nameText).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(mContext,HisOrHerHome.class);
+                    Twibber tb = (Twibber) getItem(p);
+                    in.putExtra("User",(Serializable)LitePal.find(User.class,tb.getPublisherID()));
+                    mContext.startActivity(in);
+                }
+            });
+            holder.getView(R.id.twibberContent).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(mContext,TwibberPage.class);
+                    in.putExtra("twibber",(Serializable)getItem(p));
+                    mContext.startActivity(in);
+                }
+            });
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent in = new Intent(mContext,TwibberPage.class);
+                    in.putExtra("twibber",(Serializable)getItem(p));
+                    mContext.startActivity(in);
+                }
+            });
         }
     }
 
