@@ -15,17 +15,19 @@ public class Twibber extends LitePalSupport  implements Serializable {
     private Date date;
     private int publisherID;
     private int likeCount;
-    private int transferCount;
+    private int CommentCount;
 
     //Auto generated getter and setter below
 
-    public int getTransferCount() {
-        return transferCount;
+
+    public int getCommentCount() {
+        return CommentCount;
     }
 
-    public void setTransferCount(int transferCount) {
-        this.transferCount = transferCount;
+    public void setCommentCount(int commentCount) {
+        CommentCount = commentCount;
     }
+
     public int getLikeCount() {
         return likeCount;
     }

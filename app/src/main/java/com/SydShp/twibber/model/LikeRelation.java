@@ -1,10 +1,12 @@
 package com.SydShp.twibber.model;
 
-import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
-public class LikeRelation extends LitePal {
+public class LikeRelation extends LitePalSupport {
+
     private int id;
     private int twibberId;
+    private int contenterId;
 
     public int getId() {
         return id;
@@ -30,5 +32,4 @@ public class LikeRelation extends LitePal {
         this.contenterId = contenterId;
     }
 
-    private int contenterId;
 }

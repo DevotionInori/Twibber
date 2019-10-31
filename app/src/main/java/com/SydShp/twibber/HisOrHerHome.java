@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.SydShp.twibber.model.LikeRelation;
 import com.SydShp.twibber.model.Twibber;
 import com.SydShp.twibber.model.User;
 import com.SydShp.twibber.model.UserRelation;
@@ -125,10 +127,61 @@ public class HisOrHerHome extends AppCompatActivity {
             }
 
             @Override
-            public void convert(VH holder, Twibber data, int position) {
+            public void convert(final VH holder, Twibber data, int position) {
                 holder.setText(R.id.nameText, data.getUsername());
                 holder.setText(R.id.timeText,getThisTime(data.getDate()));
                 holder.setText(R.id.twibberContent,data.getContent());
+
+                final Twibber twibber = data;
+
+                SharedPreferences sp =getSharedPreferences("login", Context.MODE_PRIVATE);
+                int uid=sp.getInt("id",-1);
+                if(uid!=-1){
+                    List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                    for (LikeRelation i :
+                            likes) {
+                        if(i.getContenterId()==data.getId()){
+
+                            holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                        }
+                    }
+                }
+
+                holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferences sp = getSharedPreferences("login",Context.MODE_PRIVATE);
+                        int uid=sp.getInt("id",-1);
+                        if(uid!=-1){
+                            List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                            boolean liked=false;
+                            int deleteId=-1;
+                            for (LikeRelation i :
+                                    likes) {
+                                if(i.getContenterId()==twibber.getId()){
+                                    liked=true;
+                                    deleteId=i.getId();
+                                }
+                            }
+                            if(liked){
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setLikeCount(twibber1.getLikeCount()-1);
+                                twibber1.save();
+                                LitePal.delete(LikeRelation.class,deleteId);
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
+                            }else {
+                                Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                twibber1.setLikeCount(twibber1.getLikeCount()+1);
+                                twibber1.save();
+                                LikeRelation likeRelation = new LikeRelation();
+                                likeRelation.setTwibberId(uid);
+                                likeRelation.setContenterId(twibber.getId());
+                                likeRelation.save();
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                            }
+                        }
+                    }
+                });
             }
         };
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));

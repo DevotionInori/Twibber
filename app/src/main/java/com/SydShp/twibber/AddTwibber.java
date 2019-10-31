@@ -48,7 +48,7 @@ public class AddTwibber extends AppCompatActivity {
                 tTwibber.setPublisherID(sp.getInt("id",0));
                 tTwibber.setDate(new Date());
                 tTwibber.setLikeCount(0);
-                tTwibber.setTransferCount(0);
+                tTwibber.setCommentCount(0);
                 tTwibber.save();
                 AddTwibber.this.finish();
             }

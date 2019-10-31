@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.SydShp.twibber.model.LikeRelation;
 import com.SydShp.twibber.model.Twibber;
 import com.SydShp.twibber.model.User;
 import com.SydShp.twibber.model.UserRelation;
@@ -138,13 +140,61 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                public void convert(VH holder, Twibber data, int position) {
+                public void convert(final VH holder, Twibber data, int position) {
                     holder.setText(R.id.nameText, data.getUsername());
                     holder.setText(R.id.timeText,getThisTime(data.getDate()));
                     holder.setText(R.id.twibberContent,data.getContent());
 
+                    final Twibber twibber = data;
 
+                    SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                    int uid=sp.getInt("id",-1);
+                    if(uid!=-1){
+                        List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                        for (LikeRelation i :
+                                likes) {
+                            if(i.getContenterId()==data.getId()){
 
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                            }
+                        }
+                    }
+
+                    holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                            int uid=sp.getInt("id",-1);
+                            if(uid!=-1){
+                                List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                                boolean liked=false;
+                                int deleteId=-1;
+                                for (LikeRelation i :
+                                        likes) {
+                                    if(i.getContenterId()==twibber.getId()){
+                                        liked=true;
+                                        deleteId=i.getId();
+                                    }
+                                }
+                                if(liked){
+                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                    twibber1.setLikeCount(twibber1.getLikeCount()-1);
+                                    twibber1.save();
+                                    LitePal.delete(LikeRelation.class,deleteId);
+                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
+                                }else {
+                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                    twibber1.setLikeCount(twibber1.getLikeCount()+1);
+                                    twibber1.save();
+                                    LikeRelation likeRelation = new LikeRelation();
+                                    likeRelation.setTwibberId(uid);
+                                    likeRelation.setContenterId(twibber.getId());
+                                    likeRelation.save();
+                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                                }
+                            }
+                        }
+                    });
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
@@ -171,45 +221,63 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                public void convert(VH holder, Twibber data, int position) {
+                public void convert(final VH holder, Twibber data, int position) {
                     holder.setText(R.id.nameText, data.getUsername());
                     holder.setText(R.id.timeText,getThisTime(data.getDate()));
                     holder.setText(R.id.twibberContent,data.getContent());
 
-                    final int p = position;
+                    final Twibber twibber = data;
 
-                    holder.getView(R.id.icAvatar).setOnClickListener(new View.OnClickListener() {
+                    SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                    int uid=sp.getInt("id",-1);
+                    if(uid!=-1){
+                        List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                        for (LikeRelation i :
+                                likes) {
+                            if(i.getContenterId()==data.getId()){
+
+                                holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                            }
+                        }
+                    }
+
+                    holder.getView(R.id.ib_like).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Intent in = new Intent(mContext,HisOrHerHome.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
+                            SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
+                            int uid=sp.getInt("id",-1);
+                            if(uid!=-1){
+                                List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
+                                boolean liked=false;
+                                int deleteId=-1;
+                                for (LikeRelation i :
+                                        likes) {
+                                    if(i.getContenterId()==twibber.getId()){
+                                        liked=true;
+                                        deleteId=i.getId();
+                                    }
+                                }
+                                if(liked){
+                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                    twibber1.setLikeCount(twibber1.getLikeCount()-1);
+                                    twibber1.save();
+                                    LitePal.delete(LikeRelation.class,deleteId);
+                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
+                                }else {
+                                    Twibber twibber1 = LitePal.find(Twibber.class,twibber.getId());
+                                    twibber1.setLikeCount(twibber1.getLikeCount()+1);
+                                    twibber1.save();
+                                    LikeRelation likeRelation = new LikeRelation();
+                                    likeRelation.setTwibberId(uid);
+                                    likeRelation.setContenterId(twibber.getId());
+                                    likeRelation.save();
+                                    holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                                }
+                            }
                         }
                     });
-                    holder.getView(R.id.nameText).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,HisOrHerHome.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
-                    holder.getView(R.id.twibberContent).setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,TwibberPage.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
-                    holder.itemView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent in = new Intent(mContext,TwibberPage.class);
-                            in.putExtra("twibber",(Serializable)getItem(p));
-                            mContext.startActivity(in);
-                        }
-                    });
+
+
                 }
             };
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

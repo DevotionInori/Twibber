@@ -1,8 +1,8 @@
 package com.SydShp.twibber.model;
 
-import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
-public class Content extends LitePal {
+public class Content extends LitePalSupport {
 
     private int id;
     private int twibberId;

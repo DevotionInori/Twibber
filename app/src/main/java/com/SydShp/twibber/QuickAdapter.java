@@ -6,6 +6,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -218,6 +219,11 @@ public abstract class QuickAdapter<T> extends RecyclerView.Adapter<QuickAdapter.
         public void setText(int id, String value){
             TextView view = getView(id);
             view.setText(value);
+        }
+
+        public void setImage(int id, int draw){
+            ImageButton view = getView(id);
+            view.setImageResource(draw);
         }
 
     }
