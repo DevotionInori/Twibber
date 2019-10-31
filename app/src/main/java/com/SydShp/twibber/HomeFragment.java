@@ -84,6 +84,7 @@ public class HomeFragment extends Fragment {
             data2=LitePal.findAll(Twibber.class);
             Collections.sort(data2);
             adapterLatest.notifyDataSetChanged();
+            adapterLatest.setmDatas(data2);
 
         }
         super.onResume();
@@ -106,6 +107,7 @@ public class HomeFragment extends Fragment {
             logInTip1=view.findViewById(R.id.home_log_tip);
 
             data1=new ArrayList<Twibber>();
+            data2=new ArrayList<Twibber>();
 
             SharedPreferences sp =mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
             if(sp.getString("username",null)!=null){

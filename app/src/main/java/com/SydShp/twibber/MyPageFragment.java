@@ -88,9 +88,9 @@ public class MyPageFragment extends Fragment {
             mTwibber = LitePal.where("publisherID = ?", ""+sp.getInt("id",0)).find(Twibber.class);
             data.addAll(mTwibber);
         }
-        adapter.notifyDataSetChanged();
+
         Collections.sort(data);
-        adapter.setmDatas(data);
+        adapter.notifyDataSetChanged();
         super.onResume();
     }
 
