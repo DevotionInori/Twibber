@@ -240,17 +240,19 @@ public class HomeFragment extends Fragment {
                 holder.setText(R.id.twibberContent,data.getContent());
 
                 final Twibber twibber = data;
-
+                boolean liked=false;
                 SharedPreferences sp = mContext.getSharedPreferences("login",Context.MODE_PRIVATE);
-                final int uid=sp.getInt("id",-1);
                 if(uid!=-1){
                     List<LikeRelation> likes = LitePal.where("twibberId = ?",""+uid).find(LikeRelation.class);
                     for (LikeRelation i :
                             likes) {
                         if(i.getContenterId()==data.getId()){
                             holder.setImage(R.id.ib_like,R.drawable.ic_action_liked);
+                            liked=true;
                         }
                     }
+                    if(!liked)
+                        holder.setImage(R.id.ib_like,R.drawable.ic_action_like);
                 }
 
                 holder.getView(R.id.ib_transfer_twibber_item).setOnClickListener(new View.OnClickListener() {
