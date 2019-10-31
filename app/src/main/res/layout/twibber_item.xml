@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#00000000"
+            android:id="@+id/ib_transfer_twibber_item"
             android:src="@drawable/ic_action_trans"/>
 
         <ImageButton

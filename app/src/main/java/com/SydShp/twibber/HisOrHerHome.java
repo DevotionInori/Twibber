@@ -80,7 +80,7 @@ public class HisOrHerHome extends AppCompatActivity {
                     btnFollow.setText("关注");
                     btnFollow.setBackground(getDrawable(R.drawable.btn_true_blue));
 
-                    user= LitePal.find(User.class,twibber.getPublisherID());
+                    user= LitePal.find(User.class,user.getId());
                     fansCount.setText("粉丝:"+user.getFans_count());
                     followCount.setText("关注:"+user.getFollow_count());
                 }else {
@@ -97,7 +97,7 @@ public class HisOrHerHome extends AppCompatActivity {
                     btnFollow.setText("已关注");
                     btnFollow.setBackground(getDrawable(R.drawable.btn_followed));
 
-                    user= LitePal.find(User.class,twibber.getPublisherID());
+                    user= LitePal.find(User.class,user.getId());
                     fansCount.setText("粉丝:"+user.getFans_count());
                     followCount.setText("关注:"+user.getFollow_count());
                 }
