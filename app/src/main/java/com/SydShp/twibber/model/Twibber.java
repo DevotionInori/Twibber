@@ -5,14 +5,14 @@ import org.litepal.crud.LitePalSupport;
 
 import java.util.Date;
 
-public class TTwibber extends LitePalSupport {
+public class Twibber extends LitePalSupport {
 
     private int id;
     private String username;
     @Column(nullable = true)
     private String content;
     private Date date;
-    private int publisherID;
+    private String publisherID;
     private int likeCount;
     private int transferCount;
 
@@ -41,11 +41,11 @@ public class TTwibber extends LitePalSupport {
         this.id = id;
     }
 
-    public int getPublisherID() {
+    public String getPublisherID() {
         return publisherID;
     }
 
-    public void setPublisherID(int publisherID) {
+    public void setPublisherID(String publisherID) {
         this.publisherID = publisherID;
     }
 

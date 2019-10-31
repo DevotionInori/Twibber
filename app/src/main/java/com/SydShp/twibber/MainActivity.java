@@ -7,11 +7,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -77,8 +79,13 @@ public class MainActivity extends AppCompatActivity {
         faButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent in = new Intent(MainActivity.this,AddTwibber.class);
-                startActivity(in);
+                SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+                if(sp.getString("username",null)==null)
+                    Toast.makeText(MainActivity.this,"请先登录",Toast.LENGTH_LONG).show();
+                else{
+                    Intent in = new Intent(MainActivity.this,AddTwibber.class);
+                    startActivity(in);
+                }
             }
         });
 

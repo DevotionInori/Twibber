@@ -109,6 +109,7 @@ public class LogIn extends AppCompatActivity {
                             SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
                             SharedPreferences.Editor editor = sp.edit();
                             editor.putString("username",user.get(0).getName()).apply();
+                            editor.putString("id",user.get(0).getLoginId()).apply();
                             LogIn.this.finish();
                         }else{
                             Toast.makeText(LogIn.this, "密码错误!", Toast.LENGTH_SHORT).show();

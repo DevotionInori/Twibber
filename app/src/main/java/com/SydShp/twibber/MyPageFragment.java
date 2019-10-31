@@ -17,9 +17,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.SydShp.twibber.model.Twibber;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import org.litepal.LitePal;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MyPageFragment extends Fragment {
@@ -100,26 +105,13 @@ public class MyPageFragment extends Fragment {
             login.setText("登录");
         }
 
-        data=new ArrayList<Twibber>();
-        data.add(new Twibber("Devotion","hhhhhhhhhhhhhhhhhhhhh"));
-        data.add(new Twibber("Devotion","哈哈哈哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"
-        ));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
-        data.add(new Twibber("Devotion","哈哈哈大师法大使馆还是当天分公司的附件一染色很关键考核人特级合格不让他以改了欲哭俄日月入而不服而过故意如果附件舍不得放寒假刚打算要打防结合哈或或哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈和或或或或或或或"));
 
+        data=new ArrayList<Twibber>();
+        List<Twibber> mTwibber;
+        if(sp.getString("id",null)!=null){
+            mTwibber = LitePal.where("publisherID = ?", sp.getString("id",null)).find(Twibber.class);
+            data.addAll(mTwibber);
+        }
 
 
         QuickAdapter adapter = new QuickAdapter<Twibber>(data,mContext) {
@@ -131,7 +123,7 @@ public class MyPageFragment extends Fragment {
             @Override
             public void convert(VH holder, Twibber data, int position) {
                 holder.setText(R.id.nameText, data.getUsername());
-                holder.setText(R.id.timeText,data.getTime());
+                holder.setText(R.id.timeText,getThisTime(data.getDate()));
                 holder.setText(R.id.twibberContent,data.getContent());
             }
         };
@@ -139,5 +131,39 @@ public class MyPageFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         adapter.addFooterView(LayoutInflater.from(mContext).inflate(R.layout.item_foot,null));
         recyclerView.addItemDecoration(new LinearItemDecoration(mContext, LinearLayoutManager.VERTICAL));
+    }
+
+    public String getThisTime(Date date) {
+
+        Date dateNow = new Date();
+        long delta = dateNow.getTime() - date.getTime();
+        //Calendar calendar = Calendar.getInstance();
+        String t = "";
+        if (delta < 60000) {
+            t += "刚刚";
+        } else if (delta < 3600 * 1000) {
+            long d = delta / 60000;
+            t += d;
+            t += "分钟前";
+        } else if (delta < 3600 * 10 * 1000) {
+            long d = delta / (3600 * 1000);
+            t += d;
+            t += "小时前";
+        } else {
+            SimpleDateFormat ymd = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
+            SimpleDateFormat hm = new SimpleDateFormat("hh:mm");
+            if (yyyy.format(date) != yyyy.format(dateNow)) {
+                t += yyyy.format(date);
+                t += "年";
+            }
+            if (ymd.format(date) != ymd.format(dateNow)) {
+                SimpleDateFormat md = new SimpleDateFormat("MM月dd日");
+                t += md.format(date);
+            } else {
+                t += hm.format(date);
+            }
+        }
+        return t;
     }
 }

@@ -2,15 +2,24 @@ package com.SydShp.twibber;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.SydShp.twibber.model.Twibber;
+import com.google.android.material.textfield.TextInputEditText;
+
+import java.util.Date;
 
 public class AddTwibber extends AppCompatActivity {
 
     private Button cancel;
     private Button publicTb;
+    private TextView UserName;
+    private TextInputEditText inputEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +38,32 @@ public class AddTwibber extends AppCompatActivity {
             }
         });
 
+        publicTb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+                Twibber tTwibber = new Twibber();
+                tTwibber.setUsername(sp.getString("username",null));
+                tTwibber.setContent(inputEditText.getText().toString());
+                tTwibber.setPublisherID(sp.getString("id",null));
+                tTwibber.setDate(new Date());
+                tTwibber.setLikeCount(0);
+                tTwibber.setTransferCount(0);
+                tTwibber.save();
+                AddTwibber.this.finish();
+            }
+        });
+
     }
 
     private void init(){
         cancel=findViewById(R.id.btn_cancel);
         publicTb=findViewById(R.id.btn_public);
+        UserName=findViewById(R.id.add_name);
+        inputEditText=findViewById(R.id.twibber_content);
+
+        SharedPreferences sp = getSharedPreferences("login",MODE_PRIVATE);
+        UserName.setText(sp.getString("username",null));
+
     }
 }
